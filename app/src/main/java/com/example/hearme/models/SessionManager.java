@@ -62,7 +62,6 @@ public class SessionManager {
         editor.putString(KEY_USERNAME, adminData.getUsername());
         editor.putInt(KEY_ADMIN_ID, adminData.getAdminId());
 
-        // ⭐️ --- THIS IS THE FIX --- ⭐️
         // Get the embedded user data and save it
         UserData userData = adminData.getUserData();
         if (userData != null) {
@@ -71,21 +70,21 @@ public class SessionManager {
             editor.putString(KEY_ADDRESS, userData.getAddress());
             editor.putString(KEY_EMAIL, userData.getEmail());
         }
-        // ⭐️ --- END FIX --- ⭐️
 
         editor.apply();
     }
 
     /**
-     * Updates user details after an edit
+     * ⭐️ THIS IS THE NEW METHOD ⭐️
+     * Updates user details after an edit, using the UserData object.
      */
-    public void updateUserDetails(String username, String fullName, String address, String email) {
-        // Only update if it's a user session
-        if (!isAdmin()) {
-            editor.putString(KEY_USERNAME, username);
-            editor.putString(KEY_FULL_NAME, fullName);
-            editor.putString(KEY_ADDRESS, address);
-            editor.putString(KEY_EMAIL, email);
+    public void updateUserDetails(UserData updatedUser) {
+        // Only update if it's a user or an admin with user data
+        if (isLoggedIn() && updatedUser != null) {
+            editor.putString(KEY_USERNAME, updatedUser.getUsername());
+            editor.putString(KEY_FULL_NAME, updatedUser.getFullName());
+            editor.putString(KEY_ADDRESS, updatedUser.getAddress());
+            editor.putString(KEY_EMAIL, updatedUser.getEmail());
             editor.apply();
         }
     }
@@ -123,7 +122,7 @@ public class SessionManager {
         return prefs.getString(KEY_USERNAME, "Guest");
     }
 
-    // --- User-Specific Getters ---
+    // --- User-Specific Getters (Admins also have these) ---
     public int getUserId() {
         return prefs.getInt(KEY_USER_ID, 0);
     }

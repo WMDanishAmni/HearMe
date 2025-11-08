@@ -10,6 +10,7 @@
     <color name="background_gray">#F5F5F5</color>
     <color name="emergency_red">#F44336</color>
     <color name="yellow">#FFC107</color>
+    <color name="yellow_dark">#FFA000</color>
     <color name="amber_700">#FFC107</color>
     <color name="dark_gray">#666666</color>
     <color name="purple_200">#FFBB86FC</color>
@@ -18,4 +19,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="lavender">#8692f7</color>
     <color name="grey">#d2d2d2</color>
+
+    <color name="text_color_light">#FF212121</color>
+    <color name="text_color_dark">#FFFFFFFF</color>
 </resources>

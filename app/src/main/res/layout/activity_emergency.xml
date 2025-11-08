@@ -179,7 +179,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#D32F2F"
-                android:text="HANTAR SEGERA"
+                android:text="SEND IMMEDIATELY"
                 android:textAllCaps="true"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
@@ -190,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Kontackt Peribadi"
+                android:text="Personal Contact"
                 android:textColor="#333333"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -222,7 +222,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:text="Jenis Kecemasan"
+                android:text="Type of Emergency"
                 android:textColor="#333333"
                 android:textSize="16sp"
                 android:textStyle="bold" />

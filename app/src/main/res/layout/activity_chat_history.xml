@@ -8,34 +8,23 @@
     android:background="#FFFFFF"
     tools:context=".activities.history.ChatHistoryActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#FFC107"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_back_arrow"
-            app:tint="#333333" />
-
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerInParent="true"
             android:text="Chat History"
             android:textColor="#333333"
             android:textSize="20sp"
@@ -45,6 +34,8 @@
             android:id="@+id/btn_delete_all"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
@@ -55,16 +46,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:text="DELETE ALL"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:layout_gravity="center" />
+                android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/history_toggle"
@@ -197,11 +188,12 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="#55FFC107"> <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_recent_history"
-            app:tint="#333333" />
+            android:background="#55FFC107">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_recent_history"
+                app:tint="#333333" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

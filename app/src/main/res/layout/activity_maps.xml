@@ -41,7 +41,7 @@
                 android:id="@+id/btnSelectLocation"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Pilih Lokasi" />
+                android:text="Choose Location" />
         </LinearLayout>
 
 

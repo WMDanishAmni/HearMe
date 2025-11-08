@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="smsto" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -87,6 +93,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.home.emergency.MessageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.home.emergency.AddCustomCallActivity"
             android:exported="false" />
 
         <activity

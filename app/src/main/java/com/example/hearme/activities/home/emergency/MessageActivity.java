@@ -26,7 +26,7 @@ public class MessageActivity extends AppCompatActivity {
     private static final String DEFAULT_RECIPIENT = "01124206586";
 
     // ⭐️ FIXED API_URL to use the standard emulator IP
-    private static final String API_URL = "http://10.194.52.233/hear_me_api/save_emergency.php";
+    private static final String API_URL = "http://192.168.67.98/hear_me_api/save_emergency.php";
 
     private SessionManager sessionManager;
 

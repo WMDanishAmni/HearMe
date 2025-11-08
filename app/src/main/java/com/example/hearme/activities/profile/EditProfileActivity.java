@@ -51,9 +51,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Load existing data into fields
         loadUserData();
 
-        // --- UPDATED Save Button Logic ---
         btnSave.setOnClickListener(v -> {
-            // Get all data from fields
             String username = etUsername.getText().toString().trim();
             String fullName = etFullName.getText().toString().trim();
             String email = etEmail.getText().toString().trim();
@@ -62,16 +60,19 @@ public class EditProfileActivity extends AppCompatActivity {
             String newPass = etNewPassword.getText().toString().trim();
             String confirmPass = etConfirmPassword.getText().toString().trim();
 
-            // --- Client-side Validation ---
-            if (username.isEmpty() || fullName.isEmpty() || email.isEmpty() || address.isEmpty()) {
-                Toast.makeText(this, "Please fill in all user details (except password)", Toast.LENGTH_SHORT).show();
+            if (username.isEmpty() || fullName.isEmpty() || email.isEmpty()) { // Address can be empty
+                Toast.makeText(this, "Please fill in Username, Full Name, and Email", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Check if user is changing password
-            if (!newPass.isEmpty()) {
+            // Check if password fields are valid (if user is trying to change it)
+            if (!newPass.isEmpty() || !oldPass.isEmpty() || !confirmPass.isEmpty()) {
                 if (oldPass.isEmpty()) {
                     Toast.makeText(this, "Please enter your old password to set a new one", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (newPass.isEmpty()) {
+                    Toast.makeText(this, "Please enter a new password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!newPass.equals(confirmPass)) {
@@ -80,7 +81,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
 
-            // All checks passed, proceed with API call
             saveProfileChanges(username, fullName, email, address, oldPass, newPass, confirmPass);
         });
     }
@@ -92,7 +92,6 @@ public class EditProfileActivity extends AppCompatActivity {
         etEmail.setText(sessionManager.getEmail());
     }
 
-    // --- NEW API CALL METHOD ---
     private void saveProfileChanges(String username, String fullName, String email, String address, String oldPass, String newPass, String confirmPass) {
         String token = sessionManager.getToken();
         if (token == null) {
@@ -106,29 +105,30 @@ public class EditProfileActivity extends AppCompatActivity {
         call.enqueue(new Callback<UpdateProfileResponse>() {
             @Override
             public void onResponse(Call<UpdateProfileResponse> call, Response<UpdateProfileResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    // Success!
-                    Toast.makeText(EditProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful() && response.body() != null) {
+                    UpdateProfileResponse res = response.body(); // Get the response
 
-                    // Update the session with the new data from the server
-                    UserData updatedUser = response.body().getData();
-                    sessionManager.updateUserDetails(
-                            updatedUser.getUsername(),
-                            updatedUser.getFullName(),
-                            updatedUser.getAddress(),
-                            updatedUser.getEmail()
-                    );
+                    if (res.isSuccess()) {
+                        // Success!
+                        Toast.makeText(EditProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
 
-                    // Go back to the profile page
-                    finish();
+                        // ⭐️ --- THIS IS THE FIX --- ⭐️
+                        // Get the UserData object from the response
+                        UserData updatedUser = res.getData();
+                        // Pass the entire object to the SessionManager
+                        sessionManager.updateUserDetails(updatedUser);
+                        // ⭐️ --- END FIX --- ⭐️
 
-                } else {
-                    // API returned an error (e.g., "Old password incorrect")
-                    String error = "Failed to update profile.";
-                    if (response.body() != null) {
-                        error = response.body().getError();
+                        // Go back to the profile page
+                        finish();
+
+                    } else {
+                        // API returned an error (e.g., "Username already taken")
+                        Toast.makeText(EditProfileActivity.this, res.getError(), Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(EditProfileActivity.this, error, Toast.LENGTH_LONG).show();
+                } else {
+                    // API returned a non-200 code (like 404 or 500)
+                    Toast.makeText(EditProfileActivity.this, "Server error: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 

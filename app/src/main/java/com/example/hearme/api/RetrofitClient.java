@@ -24,7 +24,7 @@ public class RetrofitClient {
     // private static final String BASE_URL = "http://10.0.2.2/fullsms_api/";
     // For real device (replace with your laptop LAN IP):
     // private static final String BASE_URL = "http://192.168.1.100/fullsms_api/";
-    private static final String BASE_URL = "http://10.194.52.233/hear_me_api/";
+    private static final String BASE_URL = "http://192.168.67.98/hear_me_api/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

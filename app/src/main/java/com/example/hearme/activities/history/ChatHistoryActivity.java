@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView; // ⭐️ IMPORT
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hearme.R;
 import com.example.hearme.activities.MainActivity;
-import com.example.hearme.activities.admin.AdminDashboardActivity; // ⭐️ IMPORT
+import com.example.hearme.activities.admin.AdminDashboardActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
 import com.example.hearme.adapter.ChatHistoryAdapter;
 import com.example.hearme.adapter.EmergencyHistoryAdapter;
@@ -29,7 +29,7 @@ import com.example.hearme.models.ChatHistoryResponseModel;
 import com.example.hearme.models.ConversationResponseModel;
 import com.example.hearme.models.EmergencyHistoryModel;
 import com.example.hearme.models.EmergencyHistoryResponseModel;
-import com.example.hearme.models.SessionManager; // ⭐️ IMPORT
+import com.example.hearme.models.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +42,20 @@ public class ChatHistoryActivity extends AppCompatActivity {
 
     private static final String TAG = "ChatHistoryActivity";
 
+    // --- UI Components ---
     private RecyclerView recyclerView;
     private LinearLayout emptyStateLayout;
     private TextView tvEmptyStateTitle, tvEmptyStateMessage;
     private TextView btnChatHistory, btnEmergencyHistory;
 
+    // --- Adapters and Data Lists ---
     private ChatHistoryAdapter chatAdapter;
     private List<ChatHistoryModel> chatHistoryList = new ArrayList<>();
     private EmergencyHistoryAdapter emergencyAdapter;
     private List<EmergencyHistoryModel> emergencyHistoryList = new ArrayList<>();
 
-    private SessionManager sessionManager; // This was already here
+    // --- State ---
+    private SessionManager sessionManager;
     private boolean isChatMode = true;
 
     @Override
@@ -60,7 +63,7 @@ public class ChatHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_history);
 
-        sessionManager = new SessionManager(this); // Already here
+        sessionManager = new SessionManager(this);
 
         // Initialize views
         recyclerView = findViewById(R.id.recycler_chat_history);
@@ -71,7 +74,10 @@ public class ChatHistoryActivity extends AppCompatActivity {
         btnEmergencyHistory = findViewById(R.id.btn_emergency_history);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+
+        // ⭐️ LINE REMOVED ⭐️
+        // findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+
         findViewById(R.id.btn_delete_all).setOnClickListener(v -> {
             if (isChatMode) {
                 showDeleteAllConfirmationDialog();
@@ -83,10 +89,8 @@ public class ChatHistoryActivity extends AppCompatActivity {
         btnChatHistory.setOnClickListener(v -> selectChatMode());
         btnEmergencyHistory.setOnClickListener(v -> selectEmergencyMode());
 
-        // ⭐️ UPDATED CALL ⭐️
         setupBottomNavigation("history"); // Highlight the "history" tab
 
-        // Initial load
         updateUI();
     }
 
@@ -326,7 +330,6 @@ public class ChatHistoryActivity extends AppCompatActivity {
         Toast.makeText(this, "All conversations cleared from list", Toast.LENGTH_SHORT).show();
     }
 
-    // --- ⭐️ NEW DYNAMIC NAVIGATION METHOD ⭐️ ---
 
     /**
      * Sets up the bottom navigation bar based on the user's role.
@@ -343,9 +346,13 @@ public class ChatHistoryActivity extends AppCompatActivity {
         View navHome = bottomNavView.findViewById(R.id.nav_home);
         View navHistory = bottomNavView.findViewById(R.id.nav_history);
         View navGuideAdmin = bottomNavView.findViewById(R.id.nav_guide_admin); // The dynamic button
-        View navProfile = bottomNavView.findViewById(R.id.nav_profile); // Renamed from nav_settings
+        View navProfile = bottomNavView.findViewById(R.id.nav_profile);
 
-        // Get the inner parts of the dynamic button
+        if (navHome == null || navHistory == null || navGuideAdmin == null || navProfile == null) {
+            Log.e(TAG, "FATAL: A navigation button was not found.");
+            return;
+        }
+
         ImageView navGuideAdminIcon = bottomNavView.findViewById(R.id.nav_guide_admin_icon);
         TextView navGuideAdminText = bottomNavView.findViewById(R.id.nav_guide_admin_text);
 
@@ -356,14 +363,12 @@ public class ChatHistoryActivity extends AppCompatActivity {
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
 
             navGuideAdmin.setOnClickListener(v -> {
-                Intent intent = new Intent(this, AdminDashboardActivity.class);
-                startActivity(intent);
-                finish(); // Finish current activity
+                if (!"admin".equals(activePage)) {
+                    Intent intent = new Intent(this, AdminDashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             });
-
-            if ("admin".equals(activePage)) {
-                navGuideAdmin.setBackgroundColor(0x55FFC107);
-            }
 
         } else {
             // --- USER ---
@@ -371,23 +376,20 @@ public class ChatHistoryActivity extends AppCompatActivity {
             navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // Use built-in icon
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
-                Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
-                // finish(); // Finish current activity
+                if (!"guide".equals(activePage)) {
+                    Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
+                }
             });
-
-            if ("guide".equals(activePage)) {
-                navGuideAdmin.setBackgroundColor(0x55FFC107);
-            }
         }
 
         // 3. Set click listeners for the other 3 buttons
         navHome.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
+            if (!"home".equals(activePage)) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
         });
 
         navHistory.setOnClickListener(v -> {
@@ -395,9 +397,11 @@ public class ChatHistoryActivity extends AppCompatActivity {
         });
 
         navProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-            finish();
+            if (!"profile".equals(activePage)) {
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         // 4. Set highlight for the active page
@@ -407,8 +411,13 @@ public class ChatHistoryActivity extends AppCompatActivity {
             navHistory.setBackgroundColor(0x55FFC107); // Highlight History
         } else if ("profile".equals(activePage)) {
             navProfile.setBackgroundColor(0x55FFC107);
+        } else if ("admin".equals(activePage) && sessionManager.isAdmin()) {
+            navGuideAdmin.setBackgroundColor(0x55FFC107);
+        } else if ("guide".equals(activePage) && !sessionManager.isAdmin()) {
+            navGuideAdmin.setBackgroundColor(0x55FFC107);
         }
     }
+
 
     // This is used to refresh the list if a chat is deleted in ChatDetailActivity
     @Override
@@ -426,7 +435,7 @@ public class ChatHistoryActivity extends AppCompatActivity {
         super.onResume();
         // Refresh the UI in case we are coming back to it
         updateUI();
-        // Also refresh the nav bar in case the role changed (though unlikely)
+        // Also refresh the nav bar
         setupBottomNavigation("history");
     }
 }
