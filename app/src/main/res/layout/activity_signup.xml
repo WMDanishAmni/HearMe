@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- file: activity_signup.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -71,6 +72,7 @@
 
                     <EditText
                         android:id="@+id/etUsername"
+                        android:textColor="#000000"
                         android:hint="Username"
                         android:drawableStart="@android:drawable/ic_menu_edit"
                         android:drawablePadding="8dp"
@@ -86,6 +88,7 @@
                     <EditText
                         android:id="@+id/etEmail"
                         android:hint="Email"
+                        android:textColor="#000000"
                         android:inputType="textEmailAddress"
                         android:drawableStart="@android:drawable/ic_dialog_email"
                         android:drawablePadding="8dp"
@@ -100,6 +103,7 @@
                     <EditText
                         android:id="@+id/etPassword"
                         android:hint="Password"
+                        android:textColor="#000000"
                         android:inputType="textPassword"
                         android:drawableStart="@android:drawable/ic_lock_idle_lock"
                         android:drawablePadding="8dp"
@@ -114,6 +118,7 @@
                     <EditText
                         android:id="@+id/etFullName"
                         android:hint="Full Name"
+                        android:textColor="#000000"
                         android:drawableStart="@android:drawable/ic_menu_myplaces"
                         android:drawablePadding="8dp"
                         android:padding="12dp"
@@ -128,6 +133,7 @@
                     <EditText
                         android:id="@+id/etAddress"
                         android:hint="Address"
+                        android:textColor="#000000"
                         android:drawableStart="@android:drawable/ic_menu_compass"
                         android:drawablePadding="8dp"
                         android:padding="12dp"
@@ -142,6 +148,7 @@
                     <EditText
                         android:id="@+id/etPhone"
                         android:hint="Phone Number"
+                        android:textColor="#000000"
                         android:inputType="phone"
                         android:drawableStart="@android:drawable/ic_menu_call"
                         android:drawablePadding="8dp"

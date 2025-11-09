@@ -1,3 +1,4 @@
+// file: EmergencyActivity.java
 package com.example.hearme.activities.home.emergency;
 
 import android.content.Intent;
@@ -10,10 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity; // ⭐️ Ensure this is the import
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.hearme.R;
+ // ⭐️ Ensure this is extended
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.admin.AdminDashboardActivity;
 import com.example.hearme.activities.history.ChatHistoryActivity;
@@ -30,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EmergencyActivity extends AppCompatActivity {
+public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure this extends BaseActivity
 
     private Button btnSegera;
     private LinearLayout containerCustomButtons;
@@ -64,26 +66,29 @@ public class EmergencyActivity extends AppCompatActivity {
         ConstraintLayout wildlifeCell = findViewById(R.id.btn_wildlife_cell);
         ConstraintLayout injuryCell = findViewById(R.id.btn_injury_cell);
 
-        btnSegera.setOnClickListener(v -> startLocationTypeFlow("Segera", null, null));
-        accidentCell.setOnClickListener(v -> startLocationTypeFlow("Kemalangan", null, null));
-        theftCell.setOnClickListener(v -> startLocationTypeFlow("Pencurian", null, null));
-        healthCell.setOnClickListener(v -> startLocationTypeFlow("Kesihatan", null, null));
-        fireCell.setOnClickListener(v -> startLocationTypeFlow("Kebakaran", null, null));
-        wildlifeCell.setOnClickListener(v -> startLocationTypeFlow("Serangan Haiwan", null, null));
-        injuryCell.setOnClickListener(v -> startLocationTypeFlow("Cedera", null, null));
+        // ⭐️ --- START FIX: Sending English keys --- ⭐️
+
+        // "Segera" is a special case, it's fine as is.
+        btnSegera.setOnClickListener(v -> startLocationTypeFlow("Instant", null, null));
+
+        // Grid cell clicks now send the English category name
+        accidentCell.setOnClickListener(v -> startLocationTypeFlow("Accident", null, null));
+        theftCell.setOnClickListener(v -> startLocationTypeFlow("Theft", null, null));
+        healthCell.setOnClickListener(v -> startLocationTypeFlow("Health", null, null));
+        fireCell.setOnClickListener(v -> startLocationTypeFlow("Fire", null, null));
+        wildlifeCell.setOnClickListener(v -> startLocationTypeFlow("Wildlife", null, null));
+        injuryCell.setOnClickListener(v -> startLocationTypeFlow("Injury", null, null));
+
+        // ⭐️ --- END FIX --- ⭐️
 
         btnAddCustomCall.setOnClickListener(v -> {
             Intent addIntent = new Intent(EmergencyActivity.this, AddCustomCallActivity.class);
             startActivityForResult(addIntent, REQUEST_CODE_ADD_CONTACT);
         });
 
-        // ⭐️ REMOVED: fetchCustomCalls();
-        // We will call this in onResume() instead
-
         setupBottomNavigation("home");
     }
 
-    // ⭐️ --- FIX #3: ADD onResume() --- ⭐️
     @Override
     protected void onResume() {
         super.onResume();
@@ -94,36 +99,31 @@ public class EmergencyActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // This is still needed in case the user is already on the page
         if (requestCode == REQUEST_CODE_ADD_CONTACT && resultCode == RESULT_OK) {
             fetchCustomCalls();
         }
     }
 
     private void setupBottomNavigation(String activePage) {
+        // ... (This method is correct, no changes needed) ...
         View bottomNavView = findViewById(R.id.bottom_navigation);
         if (bottomNavView == null) {
             Log.e(TAG, "FATAL: bottom_navigation view not found.");
             return;
         }
-
         View navHome = bottomNavView.findViewById(R.id.nav_home);
         View navHistory = bottomNavView.findViewById(R.id.nav_history);
         View navGuideAdmin = bottomNavView.findViewById(R.id.nav_guide_admin);
         View navProfile = bottomNavView.findViewById(R.id.nav_profile);
-
         if (navHome == null || navHistory == null || navGuideAdmin == null || navProfile == null) {
             Log.e(TAG, "FATAL: A navigation button was not found.");
             return;
         }
-
         ImageView navGuideAdminIcon = bottomNavView.findViewById(R.id.nav_guide_admin_icon);
         TextView navGuideAdminText = bottomNavView.findViewById(R.id.nav_guide_admin_text);
-
         if (sessionManager.isAdmin()) {
             navGuideAdminText.setText("ADMIN");
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin);
-
             navGuideAdmin.setOnClickListener(v -> {
                 if (!"admin".equals(activePage)) {
                     Intent intent = new Intent(this, AdminDashboardActivity.class);
@@ -131,18 +131,15 @@ public class EmergencyActivity extends AppCompatActivity {
                     finish();
                 }
             });
-
         } else {
             navGuideAdminText.setText("GUIDE");
             navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
-
             navGuideAdmin.setOnClickListener(v -> {
                 if (!"guide".equals(activePage)) {
                     Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
         navHome.setOnClickListener(v -> {
             if (!"home".equals(activePage)) {
                 Intent intent = new Intent(this, MainActivity.class);
@@ -151,7 +148,6 @@ public class EmergencyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         navHistory.setOnClickListener(v -> {
             if (!"history".equals(activePage)) {
                 Intent intent = new Intent(this, ChatHistoryActivity.class);
@@ -159,7 +155,6 @@ public class EmergencyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         navProfile.setOnClickListener(v -> {
             if (!"profile".equals(activePage)) {
                 Intent intent = new Intent(this, ProfileActivity.class);
@@ -167,7 +162,6 @@ public class EmergencyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         if ("home".equals(activePage)) {
             navHome.setBackgroundColor(0x55FFC107);
         } else if ("history".equals(activePage)) {
@@ -184,7 +178,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private void startLocationTypeFlow(String jenis, String customName, String customNumber) {
         Intent i = new Intent(EmergencyActivity.this, LocationTypeActivity.class);
-        i.putExtra("jenis", jenis);
+        i.putExtra("jenis", jenis); // This now passes "Accident", "Theft", etc.
         if (customName != null) i.putExtra("custom_name", customName);
         if (customNumber != null) i.putExtra("custom_number", customNumber);
         startActivity(i);

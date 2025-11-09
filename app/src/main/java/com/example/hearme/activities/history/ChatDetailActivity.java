@@ -1,3 +1,4 @@
+// file: ChatDetailActivity.java
 package com.example.hearme.activities.history;
 
 import android.content.Intent;

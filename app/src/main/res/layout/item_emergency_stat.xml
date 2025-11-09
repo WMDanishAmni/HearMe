@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- file: item_emergency_stat.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +9,8 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white">>
 
     <LinearLayout
         android:id="@+id/stat_container"

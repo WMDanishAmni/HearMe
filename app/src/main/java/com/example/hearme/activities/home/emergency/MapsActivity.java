@@ -1,3 +1,4 @@
+// file: MapsActivity.java
 package com.example.hearme.activities.home.emergency;
 
 import android.Manifest;
@@ -148,7 +149,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     LatLng device = new LatLng(l.getLatitude(), l.getLongitude());
                     placePinAndCenter(device);
                 } else {
-                    Toast.makeText(MapsActivity.this, "Tidak dapat mendapatkan lokasi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapsActivity.this, "Tidak mendapatkan lokasi", Toast.LENGTH_SHORT).show();
                 }
                 fusedClient.removeLocationUpdates(this);
             }

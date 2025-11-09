@@ -1,3 +1,4 @@
+// file: ProfileActivity.java
 package com.example.hearme.activities.profile;
 
 import android.content.Intent;

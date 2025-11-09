@@ -14,11 +14,7 @@ import retrofit2.http.Query;
 
 public interface CustomPhraseApiService {
 
-
-
     // Save a custom phrase for a specific user
-
-
     @FormUrlEncoded
     @POST("save_custom_phrase.php")
     Call<CustomPhraseResponseModel> saveCustomPhrase(

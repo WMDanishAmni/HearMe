@@ -1,3 +1,4 @@
+// file: EditProfileActivity.java
 package com.example.hearme.activities.profile;
 
 import android.os.Bundle;

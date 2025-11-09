@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- file: activity_emergency.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -201,8 +202,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="+ Add New Contact"
-                android:textColor="#FFFFFF"
-                app:backgroundTint="@color/design_default_color_primary" />
+                android:textColor="#000000"
+                app:backgroundTint="#FFC107" />
 
             <LinearLayout
                 android:id="@+id/containerCustomButtons"
@@ -410,7 +411,7 @@
                         android:id="@+id/tv_wildlife"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Wildlife Attack"
+                        android:text="Wildlife"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"

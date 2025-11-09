@@ -1,5 +1,4 @@
 // file: ConversationApiService.java
-// Make sure this file is in the same package as your ApiClient
 package com.example.hearme.api;
 
 import com.example.hearme.models.ChatHistoryResponseModel;

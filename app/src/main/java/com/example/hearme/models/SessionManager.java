@@ -1,3 +1,4 @@
+// file: SessionManager.java
 package com.example.hearme.models;
 
 import android.content.Context;

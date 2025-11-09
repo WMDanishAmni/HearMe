@@ -1,3 +1,4 @@
+// file: AdminDashboardActivity.java
 package com.example.hearme.activities.admin;
 
 import android.content.Intent;

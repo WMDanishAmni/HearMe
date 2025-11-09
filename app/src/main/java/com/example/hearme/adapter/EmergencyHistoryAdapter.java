@@ -1,3 +1,4 @@
+// file: EmergencyHistoryAdapter.java
 package com.example.hearme.adapter;
 
 import android.content.Context;

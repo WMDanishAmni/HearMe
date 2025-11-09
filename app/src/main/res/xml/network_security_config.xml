@@ -5,6 +5,6 @@
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">127.0.0.1</domain>
         <domain includeSubdomains="true">hear-me.test</domain>
-        <domain includeSubdomains="true">192.168.67.98</domain>
+        <domain includeSubdomains="true">10.119.89.233</domain>
     </domain-config>
 </network-security-config>

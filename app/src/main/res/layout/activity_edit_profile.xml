@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- file: activity_edit_profile.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -63,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter your username" />
+                android:hint="Enter your username"
+                android:textColor="#000000"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,7 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter your full name" />
+                android:hint="Enter your full name"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="Enter your email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,6 +106,7 @@
                 android:layout_marginBottom="16dp"
                 android:gravity="top"
                 android:hint="Enter your home address"
+                android:textColor="#000000"
                 android:inputType="textMultiLine"
                 android:minLines="3" />
 
@@ -116,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="Enter your current password"
+                android:textColor="#000000"
                 android:inputType="textPassword" />
 
             <TextView
@@ -129,6 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="Enter a new password"
+                android:textColor="#000000"
                 android:inputType="textPassword" />
 
             <TextView
@@ -142,6 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="Confirm your new password"
+                android:textColor="#000000"
                 android:inputType="textPassword" />
             <Button
                 android:id="@+id/btn_save_profile"

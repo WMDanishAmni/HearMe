@@ -1,3 +1,4 @@
+// file: LocationTypeActivity.java
 package com.example.hearme.activities.home.emergency;
 
 import android.content.Intent;
@@ -47,7 +48,7 @@ public class LocationTypeActivity extends AppCompatActivity {
 
         btnRumah.setOnClickListener(v -> {
             if (alamatRumah == null || alamatRumah.isEmpty()) {
-                Toast.makeText(this, "Tiada alamat rumah disimpan di profil anda.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "No home address is saved in your profile.", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -78,7 +79,7 @@ public class LocationTypeActivity extends AppCompatActivity {
         if (alamatRumah != null && !alamatRumah.isEmpty()) {
             tvAlamatRumah.setText(alamatRumah);
         } else {
-            tvAlamatRumah.setText("(Tiada alamat disimpan)");
+            tvAlamatRumah.setText("(No location saved)");
         }
     }
 
@@ -104,7 +105,7 @@ public class LocationTypeActivity extends AppCompatActivity {
 
                 startActivity(i);
             } else {
-                Toast.makeText(this, "Tiada lokasi diterima. Sila cuba lagi.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "No location found. Please try again.", Toast.LENGTH_LONG).show();
             }
         }
     }

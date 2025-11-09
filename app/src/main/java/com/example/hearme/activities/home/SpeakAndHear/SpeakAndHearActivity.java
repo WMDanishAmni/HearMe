@@ -1,3 +1,4 @@
+// file: SpeakAndHearActivity.java
 package com.example.hearme.activities.home.SpeakAndHear; // Make sure this package is correct
 
 import android.Manifest;

@@ -1,3 +1,4 @@
+// file: SignupActivity.java
 package com.example.hearme.activities;
 
 import android.content.Intent;
