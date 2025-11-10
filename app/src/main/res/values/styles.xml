@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- file: styles.xml (values) -->
+<resources>
+    <style name="AppTheme_Medium" parent="Theme.HearMe">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextView</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="android:editTextStyle">@style/AppTheme.EditText</item>
+        <!-- ⭐️ ADD THIS LINE ⭐️ -->
+        <item name="navBarTextViewStyle">@style/AppTheme.TextView.XSmall</item>
+    </style>
+
+    <style name="AppTheme_Small" parent="AppTheme_Medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextView.Small</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button.Small</item>
+        <item name="android:editTextStyle">@style/AppTheme.EditText.Small</item>
+        <!-- ⭐️ ADD THIS LINE ⭐️ -->
+        <item name="navBarTextViewStyle">@style/AppTheme.TextView.XSmall.Small</item>
+    </style>
+
+    <style name="AppTheme_Large" parent="AppTheme_Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextView.Large</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button.Large</item>
+        <item name="android:editTextStyle">@style/AppTheme.EditText.Large</item>
+        <!-- ⭐️ ADD THIS LINE ⭐️ -->
+        <item name="navBarTextViewStyle">@style/AppTheme.TextView.XSmall.Large</item>
+    </style>
+
+    <style name="AppTheme.TextView" parent="android:Widget.TextView">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="AppTheme.TextView.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppTheme.TextView.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.Button" parent="android:Widget.Button">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="AppTheme.Button.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppTheme.Button.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.EditText" parent="android:Widget.EditText">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="AppTheme.EditText.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppTheme.EditText.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- ⭐️⭐️ ADD THIS ENTIRE NEW BLOCK ⭐️⭐️ -->
+    <!-- Styles for Navigation Bar Text -->
+    <style name="AppTheme.TextView.XSmall" parent="android:Widget.TextView">
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="AppTheme.TextView.XSmall.Small">
+        <item name="android:textSize">8sp</item>
+    </style>
+    <style name="AppTheme.TextView.XSmall.Large">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <!-- ⭐️⭐️ END OF NEW BLOCK ⭐️⭐️ -->
+
+</resources>

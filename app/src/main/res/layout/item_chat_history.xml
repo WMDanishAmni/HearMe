@@ -13,7 +13,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
     app:cardElevation="3dp"
-    app:cardBackgroundColor="@color/white">>
+    app:cardBackgroundColor="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,22 +24,23 @@
         <!-- Chat Preview -->
         <TextView
             android:id="@+id/tv_chat_preview"
+            style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Chat preview will appear here..."
-            android:textColor="#333333"
-            android:textSize="16sp" />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <!-- Timestamp -->
         <TextView
             android:id="@+id/tv_timestamp"
+            style="?android:attr/textViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Timestamp will appear here..."
-            android:textColor="#999999"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

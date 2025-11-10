@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.admin.AdminDashboardActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
+import com.example.hearme.activities.guide.GuideActivity;
 import com.example.hearme.adapter.ChatHistoryAdapter;
 import com.example.hearme.adapter.EmergencyHistoryAdapter;
 import com.example.hearme.api.ApiClient;
@@ -39,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChatHistoryActivity extends AppCompatActivity {
+public class ChatHistoryActivity extends BaseActivity {
 
     private static final String TAG = "ChatHistoryActivity";
 
@@ -119,16 +121,24 @@ public class ChatHistoryActivity extends AppCompatActivity {
     }
 
     private void updateToggleButtons() {
+        // Get colors from the theme
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true);
+        int colorSelectedText = typedValue.data;
+
+        getTheme().resolveAttribute(android.R.attr.textColorSecondary, typedValue, true);
+        int colorUnselectedText = typedValue.data;
+
         if (isChatMode) {
             btnChatHistory.setBackgroundResource(R.drawable.toggle_selected);
-            btnChatHistory.setTextColor(Color.WHITE);
+            btnChatHistory.setTextColor(colorSelectedText); // Use theme color
             btnEmergencyHistory.setBackgroundResource(R.drawable.toggle_unselected);
-            btnEmergencyHistory.setTextColor(Color.parseColor("#666666"));
+            btnEmergencyHistory.setTextColor(colorUnselectedText); // Use theme color
         } else {
             btnChatHistory.setBackgroundResource(R.drawable.toggle_unselected);
-            btnChatHistory.setTextColor(Color.parseColor("#666666"));
+            btnChatHistory.setTextColor(colorUnselectedText); // Use theme color
             btnEmergencyHistory.setBackgroundResource(R.drawable.toggle_selected);
-            btnEmergencyHistory.setTextColor(Color.WHITE);
+            btnEmergencyHistory.setTextColor(colorSelectedText); // Use theme color
         }
     }
 
@@ -255,11 +265,11 @@ public class ChatHistoryActivity extends AppCompatActivity {
         recyclerView.setVisibility(View.GONE);
         emptyStateLayout.setVisibility(View.VISIBLE);
         if (isChatMode) {
-            tvEmptyStateTitle.setText("No chat history yet");
-            tvEmptyStateMessage.setText("Your conversations will appear here\nonce you start using the app");
+            tvEmptyStateTitle.setText(getString(R.string.history_empty_chat_title));
+            tvEmptyStateMessage.setText(getString(R.string.history_empty_chat_message));
         } else {
-            tvEmptyStateTitle.setText("No emergency history yet");
-            tvEmptyStateMessage.setText("Your sent emergency alerts will appear here");
+            tvEmptyStateTitle.setText(getString(R.string.history_empty_emergency_title));
+            tvEmptyStateMessage.setText(getString(R.string.history_empty_emergency_message));
         }
     }
 
@@ -360,7 +370,7 @@ public class ChatHistoryActivity extends AppCompatActivity {
         // 2. Check the role from SessionManager
         if (sessionManager.isAdmin()) {
             // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ Use string res
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
 
             navGuideAdmin.setOnClickListener(v -> {
@@ -373,12 +383,14 @@ public class ChatHistoryActivity extends AppCompatActivity {
 
         } else {
             // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // Use built-in icon
+            navGuideAdminText.setText(getString(R.string.nav_guide));
+            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
                 if (!"guide".equals(activePage)) {
-                    Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, GuideActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
                 }
             });
         }

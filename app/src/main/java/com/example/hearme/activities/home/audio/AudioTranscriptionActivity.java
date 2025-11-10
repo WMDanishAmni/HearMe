@@ -23,10 +23,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity; // ⭐️ IMPORT
 import com.example.hearme.activities.admin.AdminDashboardActivity; // ⭐️ IMPORT
 import com.example.hearme.activities.history.ChatHistoryActivity; // ⭐️ IMPORT
 import com.example.hearme.activities.profile.ProfileActivity; // ⭐️ IMPORT
+import com.example.hearme.activities.guide.GuideActivity;
 import com.example.hearme.models.SessionManager; // ⭐️ IMPORT
 
 import java.io.File;
@@ -37,7 +39,7 @@ import java.io.OutputStream;
 
 import okhttp3.*;
 
-public class AudioTranscriptionActivity extends AppCompatActivity {
+public class AudioTranscriptionActivity extends BaseActivity {
     private static final String TAG = "AudioTranscription"; // ⭐️ ADDED TAG
     private static final int PICK_AUDIO_REQUEST = 1;
     private Button uploadButton, transcribeButton, copyButton;
@@ -144,10 +146,12 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
                     fileNameTextView.setText(actualFileName);
                     transcribeButton.setEnabled(true);
                     copyButton.setVisibility(View.GONE);
-                    Toast.makeText(this, "File selected: " + actualFileName,
+                    // ⭐️ USE STRING ⭐️
+                    Toast.makeText(this, getString(R.string.toast_file_selected, actualFileName),
                             Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
-                    Toast.makeText(this, "Error selecting file: " + e.getMessage(),
+                    // ⭐️ USE STRING ⭐️
+                    Toast.makeText(this, getString(R.string.toast_file_select_error, e.getMessage()),
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -175,13 +179,15 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
      */
     private void transcribeAudio() {
         if (selectedFile == null) {
-            Toast.makeText(this, "Please select an audio file first",
+            // ⭐️ USE STRING ⭐️
+            Toast.makeText(this, getString(R.string.toast_select_file_first),
                     Toast.LENGTH_SHORT).show();
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
         transcribeButton.setEnabled(false);
-        fileNameTextView.setText("Transcribing: " + actualFileName);
+        // ⭐️ USE STRING ⭐️
+        fileNameTextView.setText(getString(R.string.toast_transcribing, actualFileName));
         copyButton.setVisibility(View.GONE);
 
         RequestBody fileBody = RequestBody.create(
@@ -210,12 +216,14 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 runOnUiThread(() -> {
                     progressBar.setVisibility(View.GONE);
-                    transcriptionTextView.setText("Error: " + e.getMessage());
+                    // ⭐️ USE STRING ⭐️
+                    transcriptionTextView.setText(getString(R.string.toast_transcription_failed, e.getMessage()));
                     transcribeButton.setEnabled(true);
                     fileNameTextView.setText(actualFileName);
                     copyButton.setVisibility(View.GONE);
+                    // ⭐️ USE STRING ⭐️
                     Toast.makeText(AudioTranscriptionActivity.this,
-                            "Transcription failed: " + e.getMessage(),
+                            getString(R.string.toast_transcription_failed, e.getMessage()),
                             Toast.LENGTH_LONG).show();
                 });
             }
@@ -230,19 +238,23 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
                         transcribeButton.setEnabled(true);
                         fileNameTextView.setText(actualFileName);
                         copyButton.setVisibility(View.VISIBLE);
+                        // ⭐️ USE STRING ⭐️
                         Toast.makeText(AudioTranscriptionActivity.this,
-                                "Transcription completed!",
+                                getString(R.string.toast_transcription_complete),
                                 Toast.LENGTH_SHORT).show();
                     });
                 } else {
+                    final String errorMsg = "Server returned " + response.code();
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.GONE);
-                        transcriptionTextView.setText("Error: Server returned " + response.code());
+                        // ⭐️ USE STRING ⭐️
+                        transcriptionTextView.setText(getString(R.string.toast_server_error, errorMsg));
                         transcribeButton.setEnabled(true);
                         fileNameTextView.setText(actualFileName);
                         copyButton.setVisibility(View.GONE);
+                        // ⭐️ USE STRING ⭐️
                         Toast.makeText(AudioTranscriptionActivity.this,
-                                "Server error: " + response.code(),
+                                getString(R.string.toast_server_error, errorMsg),
                                 Toast.LENGTH_SHORT).show();
                     });
                 }
@@ -255,13 +267,16 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
      */
     private void copyToClipboard() {
         String transcriptionText = transcriptionTextView.getText().toString();
-        if (!transcriptionText.isEmpty() && !transcriptionText.equals("Transcription will appear here...")) {
+        // ⭐️ USE STRING ⭐️
+        if (!transcriptionText.isEmpty() && !transcriptionText.equals(getString(R.string.audio_transcription_hint))) {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Transcription", transcriptionText);
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(this, "Transcription copied to clipboard", Toast.LENGTH_SHORT).show();
+            // ⭐️ USE STRING ⭐️
+            Toast.makeText(this, getString(R.string.toast_transcription_copied), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "No transcription to copy", Toast.LENGTH_SHORT).show();
+            // ⭐️ USE STRING ⭐️
+            Toast.makeText(this, getString(R.string.toast_no_transcription_to_copy), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -299,7 +314,7 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
         // 2. Check the role from SessionManager
         if (sessionManager.isAdmin()) {
             // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ USE STRING
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
 
             navGuideAdmin.setOnClickListener(v -> {
@@ -314,13 +329,15 @@ public class AudioTranscriptionActivity extends AppCompatActivity {
 
         } else {
             // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // Use built-in icon
+            navGuideAdminText.setText(getString(R.string.nav_guide));
+            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
-                Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
+                if (!"guide".equals(activePage)) {
+                    Intent intent = new Intent(this, GuideActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
+                }
             });
 
             if ("guide".equals(activePage)) {

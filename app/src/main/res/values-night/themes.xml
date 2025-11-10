@@ -13,5 +13,13 @@
 
         <item name="android:windowBackground">@color/dark_gray</item>
         <item name="android:textColor">@color/text_color_dark</item>
+        <item name="colorSurface">@color/card_color_dark</item>
+
+
+        <item name="navBarTextViewStyle">@style/AppTheme.TextView.XSmall</item>
+        <item name="android:textColorSecondary">@color/light_gray</item>
+
+        <item name="toolbarColor">@color/card_color_dark</item>
+        <item name="chartGridColor">@color/light_gray</item>
     </style>
 </resources>

@@ -20,9 +20,10 @@ import com.example.hearme.activities.home.SpeakAndHear.SpeakAndHearActivity;
 import com.example.hearme.activities.home.audio.AudioTranscriptionActivity;
 import com.example.hearme.activities.home.emergency.EmergencyActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
+import com.example.hearme.activities.guide.GuideActivity;
 import com.example.hearme.models.SessionManager; // ⭐️ IMPORT
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity"; // ⭐️ ADDED
     private CardView cardHearFromNonDeaf;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
     // --- ⭐️ REPLACED THIS ENTIRE METHOD ⭐️ ---
 
+    // In file: MainActivity.java
+
     /**
      * Sets up the bottom navigation bar based on the user's role.
      * @param activePage A string ("home", "history", "admin", "profile") to highlight the current page.
@@ -133,12 +136,14 @@ public class MainActivity extends AppCompatActivity {
         // 2. Check the role from SessionManager
         if (sessionManager.isAdmin()) {
             // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ Use string res
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
 
             navGuideAdmin.setOnClickListener(v -> {
-                Intent intent = new Intent(this, AdminDashboardActivity.class);
-                startActivity(intent);
+                if (!"admin".equals(activePage)) {
+                    Intent intent = new Intent(this, AdminDashboardActivity.class);
+                    startActivity(intent);
+                }
             });
 
             if ("admin".equals(activePage)) {
@@ -147,13 +152,15 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // Use built-in icon
+            navGuideAdminText.setText(getString(R.string.nav_guide));
+            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
-                Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
+                if (!"guide".equals(activePage)) {
+                    Intent intent = new Intent(this, GuideActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
+                }
             });
 
             if ("guide".equals(activePage)) {

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.history.ChatHistoryActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
@@ -39,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminUserListActivity extends AppCompatActivity {
+public class AdminUserListActivity extends BaseActivity {
 
     private EditText etSearch;
     private Button btnSearch;
@@ -70,9 +71,15 @@ public class AdminUserListActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
 
         tvEmpty = new TextView(this);
-        tvEmpty.setText("No users found.");
+        tvEmpty.setText(getString(R.string.admin_user_list_empty)); // ⭐️ USE STRING
         tvEmpty.setTextSize(16f);
-        tvEmpty.setTextColor(getResources().getColor(android.R.color.darker_gray, null));
+
+        // --- ⭐️ Get theme-aware text color ⭐️ ---
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        getTheme().resolveAttribute(android.R.attr.textColorSecondary, typedValue, true);
+        tvEmpty.setTextColor(typedValue.data); // ⭐️ USE THEME COLOR
+        // --- ⭐️ End theme-aware color ⭐️ ---
+
         tvEmpty.setPadding(10, 30, 10, 30);
         ((ViewGroup)listUsers.getParent()).addView(tvEmpty);
         listUsers.setEmptyView(tvEmpty);
@@ -175,8 +182,9 @@ public class AdminUserListActivity extends AppCompatActivity {
 
                 AdminUserListResponse.UserInfo user = userList.get(position);
                 tvUsername.setText(user.getUsername());
-                tvEmail.setText("Email: " + user.getEmail());
-                tvPhone.setText("Phone: " + user.getPhone_no());
+                // ⭐️ USE STRING RESOURCES ⭐️
+                tvEmail.setText(getString(R.string.admin_user_list_email, user.getEmail()));
+                tvPhone.setText(getString(R.string.admin_user_list_phone, user.getPhone_no()));
                 return view;
             }
         };
@@ -185,15 +193,18 @@ public class AdminUserListActivity extends AppCompatActivity {
     }
 
     private void showUserDialog(AdminUserListResponse.UserInfo user) {
-        String info = "👤 Username: " + user.getUsername() + "\n"
-                + "📧 Email: " + user.getEmail() + "\n"
-                + "🪪 Full Name: " + user.getFull_name() + "\n"
-                + "🏠 Address: " + user.getAddress() + "\n"
-                + "📞 Phone: " + user.getPhone_no() + "\n"
-                + "📅 Created At: " + user.getCreated_at();
+        // ⭐️ USE STRING RESOURCE ⭐️
+        String info = getString(R.string.admin_user_dialog_info,
+                user.getUsername(),
+                user.getEmail(),
+                user.getFull_name(),
+                user.getAddress(),
+                user.getPhone_no(),
+                user.getCreated_at()
+        );
 
         new AlertDialog.Builder(this)
-                .setTitle("User Information")
+                .setTitle(getString(R.string.admin_user_dialog_title)) // ⭐️ USE STRING
                 .setMessage(info)
                 .setPositiveButton("OK", null)
                 .show();
@@ -201,7 +212,7 @@ public class AdminUserListActivity extends AppCompatActivity {
 
     /**
      * Sets up the bottom navigation bar based on the user's role.
-     * @param activePage A string ("home", "history", "admin", "profile") to highlight the current page.
+     * (This method is already using string resources, so it's perfect)
      */
     private void setupBottomNavigation(String activePage) {
         View navHome = findViewById(R.id.nav_home);
@@ -214,8 +225,8 @@ public class AdminUserListActivity extends AppCompatActivity {
 
         if (sessionManager.isAdmin()) {
             // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
-            navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png in drawables)
+            navGuideAdminText.setText(getString(R.string.nav_admin));
+            navGuideAdminIcon.setImageResource(R.drawable.ic_admin);
 
             navGuideAdmin.setOnClickListener(v -> {
                 if (!"admin".equals(activePage)) {
@@ -225,18 +236,15 @@ public class AdminUserListActivity extends AppCompatActivity {
             });
 
             if ("admin".equals(activePage)) {
-                navGuideAdmin.setBackgroundColor(0x55FFC107); // Semi-transparent yellow
+                navGuideAdmin.setBackgroundColor(0x55FFC107);
             }
 
         } else {
             // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            // ⭐️ UPDATE: Using the built-in drawable ID you provided ⭐️
+            navGuideAdminText.setText(getString(R.string.nav_guide));
             navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
                 Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
             });
 

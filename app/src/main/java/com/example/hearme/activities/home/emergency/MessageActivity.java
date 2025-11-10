@@ -16,16 +16,22 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.models.SessionManager;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class MessageActivity extends AppCompatActivity {
+public class MessageActivity extends BaseActivity {
 
-    private static final String DEFAULT_RECIPIENT = "01124206586";
-    private static final String API_URL = "http://10.119.89.233/hear_me_api/save_emergency.php";
+    // --- (FIX 1) Define the new emergency numbers ---
+    private static final String POLICE_NUMBER = "047747222";
+    private static final String FIREFIGHTER_NUMBER = "047344444";
+    private static final String AMBULANCE_NUMBER = "0138889829";
+
+    // This is your computer's IP for saving the record
+    private static final String API_URL = "http://10.56.239.233/hear_me_api/save_emergency.php";
 
     private SessionManager sessionManager;
 
@@ -55,7 +61,6 @@ public class MessageActivity extends AppCompatActivity {
 
         String jenisPesan = getMessageForJenis(jenis, customName);
 
-        // This variable holds the correct, formatted address
         String alamatTeks;
         if (alamat != null && !alamat.isEmpty()) {
             alamatTeks = alamat; // From "Alamat Rumah"
@@ -65,15 +70,25 @@ public class MessageActivity extends AppCompatActivity {
 
         String fullMessage;
         if ("Custom".equals(jenis) && customName != null && customNumber != null) {
-            fullMessage = "Nama saya " + finalNama + ". Saya ialah orang pekak. " + "Ini mesej kepada " + customName + ". \n\nAlamat saya adalah: " + alamatTeks;
+            fullMessage = getString(R.string.message_template_custom, finalNama, customName, alamatTeks);
         } else {
-            fullMessage = "Nama saya " + finalNama + ". Saya ialah orang pekak. " + jenisPesan + " \n\nAlamat saya adalah: " + alamatTeks;
+            fullMessage = getString(R.string.message_template_standard, finalNama, jenisPesan, alamatTeks);
         }
 
         tvPreview.setText(fullMessage);
 
         btnHantar.setOnClickListener(v -> {
-            String recipient = (customNumber != null && !customNumber.isEmpty()) ? customNumber : DEFAULT_RECIPIENT;
+
+            // --- (FIX 2) This is the new logic to select the correct number ---
+            String recipient;
+            if ("Custom".equals(jenis)) {
+                // Use the custom number passed from the last screen
+                recipient = (customNumber != null && !customNumber.isEmpty()) ? customNumber : POLICE_NUMBER; // Default to police if custom number is bad
+            } else {
+                // Otherwise, pick the authority based on 'jenis'
+                recipient = getRecipientForJenis(jenis);
+            }
+            // --- End of Fix ---
 
             try {
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -83,14 +98,13 @@ public class MessageActivity extends AppCompatActivity {
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 } else {
-                    Toast.makeText(MessageActivity.this, "No SMS app found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MessageActivity.this, getString(R.string.toast_no_sms_app), Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(MessageActivity.this, "Failed to open SMS", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MessageActivity.this, getString(R.string.toast_sms_fail), Toast.LENGTH_SHORT).show();
             }
 
-            // We pass the correct 'alamatTeks' variable here
             saveRecordToServer(finalNama, jenis, alamatTeks, lat, lng, recipient);
         });
     }
@@ -105,48 +119,75 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
-    private String getMessageForJenis(String jenis, String customName) {
-        if (jenis == null) return "Saya memerlukan bantuan.";
+    // --- (NEW) This helper method returns the correct phone number ---
+    private String getRecipientForJenis(String jenis) {
+        if (jenis == null) return POLICE_NUMBER; // Default to Police
 
         switch (jenis) {
+            // Police
             case "Instant":
-                return "Saya memerlukan bantuan segera.";
-            case "Accident":
-                return "Saya terlibat dalam kemalangan. Perlukan bantuan kecemasan segera.";
             case "Theft":
-                return "Terdapat kejadian pencurian. Mohon bantuan polis segera.";
-            case "Health":
-                return "Saya mempunyai kecemasan perubatan. Perlukan ambulans.";
-            case "Fire":
-                return "Terdapat kebakaran. Sila hantarkan bantuan bomba.";
+                return POLICE_NUMBER;
+
+            // Firefighter / Bomba
             case "Wildlife":
-                return "Terdapat serangan haiwan liar. Saya perlukan bantuan segera.";
+            case "Fire":
+            case "Health":
+            case "Accident":
+                return FIREFIGHTER_NUMBER;
+
+            // Ambulance
             case "Injury":
-                return "Saya mengalami kecederaan. Mohon bantuan perubatan.";
-            case "Custom":
-                if (customName != null) return "Saya ingin menghubungi " + customName + ".";
-                return "Saya memerlukan bantuan.";
+                return AMBULANCE_NUMBER;
+
             default:
-                return "Saya memerlukan bantuan.";
+                return POLICE_NUMBER; // Default for any other case
         }
     }
 
-    // ⭐️ --- THIS IS THE FIX --- ⭐️
-    // The parameter name is changed from 'alamat' to 'alamatTeks'
+    private String getMessageForJenis(String jenis, String customName) {
+        // (This method is already correct and uses your string resources)
+        if (jenis == null) return getString(R.string.message_type_default);
+        // ... (rest of the method) ...
+
+        switch (jenis) {
+            case "Instant":
+                return getString(R.string.message_type_instant);
+            case "Accident":
+                return getString(R.string.message_type_accident);
+            case "Theft":
+                return getString(R.string.message_type_theft);
+            case "Health":
+                return getString(R.string.message_type_health);
+            case "Fire":
+                return getString(R.string.message_type_fire);
+            case "Wildlife":
+                return getString(R.string.message_type_wildlife);
+            case "Injury":
+                return getString(R.string.message_type_injury);
+            case "Custom":
+                if (customName != null) return getString(R.string.message_type_custom, customName);
+                return getString(R.string.message_type_default);
+            default:
+                return getString(R.string.message_type_default);
+        }
+    }
+
     private void saveRecordToServer(String nama, String jenis, String alamatTeks, double lat, double lng, String recipient) {
+        // (This method is correct)
         RequestQueue q = Volley.newRequestQueue(this);
         StringRequest req = new StringRequest(Request.Method.POST, API_URL,
-                response -> Toast.makeText(MessageActivity.this, "Record Saved", Toast.LENGTH_SHORT).show(),
+                response -> Toast.makeText(MessageActivity.this, getString(R.string.toast_record_saved), Toast.LENGTH_SHORT).show(),
                 error -> {
                     error.printStackTrace();
-                    Toast.makeText(MessageActivity.this, "Fail to connect to the server.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MessageActivity.this, getString(R.string.toast_server_connect_fail), Toast.LENGTH_LONG).show();
                 }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> p = new HashMap<>();
                 p.put("name", nama);
                 p.put("type", jenis);
-                p.put("address", alamatTeks); // ⭐️ Now uses the correct variable
+                p.put("address", alamatTeks);
                 p.put("lat", String.valueOf(lat));
                 p.put("lng", String.valueOf(lng));
                 p.put("recipient", recipient);

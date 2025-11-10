@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- file: activity_location_type.xml -->
+<!-- file: activity_location.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/location_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?android:attr/windowBackground">
 
-    <!-- This header is correct, it's the one with the back button -->
     <include
         android:id="@+id/header_layout"
         layout="@layout/header"
@@ -16,23 +14,22 @@
         android:layout_height="75dp"
         android:layout_alignParentTop="true" />
 
-    <!-- ⭐️ MODIFIED THIS LAYOUT ⭐️ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header_layout"
         android:orientation="vertical"
         android:padding="12dp">
-        <!-- Reduced padding from 20dp to 12dp -->
 
         <TextView
+            style="?android:attr/textViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:paddingHorizontal="8dp"
-            android:text="Select Location Type"
-            android:textColor="#333333"
-            android:textSize="20sp"
+            android:text="@string/location_type_title"
+            android:textColor="?android:attr/textColor"
+
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
@@ -46,6 +43,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -61,14 +59,15 @@
                     android:layout_height="40dp"
                     android:layout_marginEnd="16dp"
                     android:src="@android:drawable/ic_menu_mylocation"
-                    app:tint="@color/design_default_color_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <TextView
+                    style="?android:attr/textViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Location"
-                    android:textColor="#333333"
-                    android:textSize="18sp"
+                    android:text="@string/location_type_current"
+                    android:textColor="?android:attr/textColor"
+
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -82,6 +81,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -97,7 +97,7 @@
                     android:layout_height="40dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_home"
-                    app:tint="@color/design_default_color_primary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -105,19 +105,21 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="?android:attr/textViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Home Address"
-                        android:textColor="#333333"
+                        android:text="@string/location_type_home"
+                        android:textColor="?android:attr/textColor"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvAlamatRumah"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(No address saved)"
-                        android:textColor="#777777"
+                        android:text="@string/location_type_no_address"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>

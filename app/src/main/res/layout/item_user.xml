@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- file: item_user.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="12dp"
     android:layout_width="match_parent"
@@ -9,28 +10,31 @@
 
     <TextView
         android:id="@+id/tvUsername"
+        style="?android:attr/textViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
+        tools:text="Username"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#000000" />
+        android:textColor="?android:attr/textColor" />
 
     <TextView
         android:id="@+id/tvEmail"
+        style="?android:attr/textViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        tools:text="Email"
         android:textSize="14sp"
-        android:textColor="#444444"
+        android:textColor="?android:attr/textColorSecondary"
         android:layout_marginTop="2dp" />
 
     <TextView
         android:id="@+id/tvPhone"
+        style="?android:attr/textViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phone Number"
+        tools:text="Phone Number"
         android:textSize="13sp"
-        android:textColor="#777777"
+        android:textColor="?android:attr/textColorHint"
         android:layout_marginTop="2dp" />
 </LinearLayout>

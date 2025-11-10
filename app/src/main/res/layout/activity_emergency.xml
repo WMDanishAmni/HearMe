@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- file: activity_emergency.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/emergency_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?android:attr/windowBackground">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_alignParentTop="true"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="10dp"
@@ -28,7 +27,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_back_arrow"
-            app:tint="#333333" />
+            app:tint="?attr/colorOnPrimary" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -39,6 +38,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/logo"
             android:paddingStart="-50dp"
+            android:contentDescription="@string/app_name"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -67,14 +67,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_home"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="HOME"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_home"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -92,14 +92,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_recent_history"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="HISTORY"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_history"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -118,15 +118,15 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_help"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
                 android:id="@+id/nav_guide_admin_text"
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="GUIDE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_guide"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -144,14 +144,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_profile"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="PROFILE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_profile"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -175,24 +175,26 @@
 
             <Button
                 android:id="@+id/btnSegera"
+
                 android:layout_width="match_parent"
                 android:layout_height="82dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="#D32F2F"
-                android:text="SEND IMMEDIATELY"
+                android:backgroundTint="@color/emergency_red"
+                android:text="@string/emergency_send_immediately"
                 android:textAllCaps="true"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCustomTitle"
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Personal Contact"
-                android:textColor="#333333"
+                android:text="@string/emergency_personal_contact"
+                android:textColor="?android:attr/textColor"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -201,9 +203,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="+ Add New Contact"
-                android:textColor="#000000"
-                app:backgroundTint="#FFC107" />
+                android:text="@string/emergency_add_contact"
+                android:textColor="?attr/colorOnPrimary"
+                app:backgroundTint="?attr/colorPrimary" />
 
             <LinearLayout
                 android:id="@+id/containerCustomButtons"
@@ -216,15 +218,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="12dp"
-                android:background="#E0E0E0" />
+                android:background="?attr/toolbarColor" />
 
             <TextView
                 android:id="@+id/tvEmergencyTitle"
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:text="Type of Emergency"
-                android:textColor="#333333"
+                android:text="@string/emergency_type_title"
+                android:textColor="?android:attr/textColor"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -247,23 +250,24 @@
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
                         android:padding="0dp"
-                        android:contentDescription="Accident"
+                        android:contentDescription="@string/emergency_type_accident"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         android:src="@drawable/ic_accident"
-                        android:background="#E0E0E0" />
+                        android:background="?attr/toolbarColor" />
 
                     <TextView
                         android:id="@+id/tv_accident"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Accident"
+                        android:text="@string/emergency_type_accident"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#333333"
+                        android:textColor="?android:attr/textColor"
                         app:layout_constraintTop_toBottomOf="@id/img_accident"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -283,23 +287,24 @@
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
                         android:padding="0dp"
-                        android:contentDescription="Theft"
+                        android:contentDescription="@string/emergency_type_theft"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         android:src="@drawable/ic_theft"
-                        android:background="#E0E0E0" />
+                        android:background="?attr/toolbarColor" />
 
                     <TextView
                         android:id="@+id/tv_theft"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Theft"
+                        android:text="@string/emergency_type_theft"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#333333"
+                        android:textColor="?android:attr/textColor"
                         app:layout_constraintTop_toBottomOf="@id/img_theft"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -319,23 +324,24 @@
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
                         android:padding="0dp"
-                        android:contentDescription="Health"
+                        android:contentDescription="@string/emergency_type_health"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         android:src="@drawable/ic_health"
-                        android:background="#E0E0E0" />
+                        android:background="?attr/toolbarColor" />
 
                     <TextView
                         android:id="@+id/tv_health"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Health"
+                        android:text="@string/emergency_type_health"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#333333"
+                        android:textColor="?android:attr/textColor"
                         app:layout_constraintTop_toBottomOf="@id/img_health"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -363,23 +369,24 @@
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
                         android:padding="0dp"
-                        android:contentDescription="Fire"
+                        android:contentDescription="@string/emergency_type_fire"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         android:src="@drawable/ic_fire"
-                        android:background="#E0E0E0" />
+                        android:background="?attr/toolbarColor" />
 
                     <TextView
                         android:id="@+id/tv_fire"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Fire"
+                        android:text="@string/emergency_type_fire"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#333333"
+                        android:textColor="?android:attr/textColor"
                         app:layout_constraintTop_toBottomOf="@id/img_fire"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -399,23 +406,24 @@
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
                         android:padding="0dp"
-                        android:contentDescription="Wildlife Attack"
+                        android:contentDescription="@string/emergency_type_wildlife"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         android:src="@drawable/ic_wildlife"
-                        android:background="#E0E0E0" />
+                        android:background="?attr/toolbarColor" />
 
                     <TextView
                         android:id="@+id/tv_wildlife"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Wildlife"
+                        android:text="@string/emergency_type_wildlife"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#333333"
+                        android:textColor="?android:attr/textColor"
                         app:layout_constraintTop_toBottomOf="@id/img_wildlife"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -435,23 +443,24 @@
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
                         android:padding="0dp"
-                        android:contentDescription="Injury"
+                        android:contentDescription="@string/emergency_type_injury"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         android:src="@drawable/ic_injury"
-                        android:background="#E0E0E0" />
+                        android:background="?attr/toolbarColor" />
 
                     <TextView
                         android:id="@+id/tv_injury"
+                        style="?android:attr/textViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Injury"
+                        android:text="@string/emergency_type_injury"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#333333"
+                        android:textColor="?android:attr/textColor"
                         app:layout_constraintTop_toBottomOf="@id/img_injury"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

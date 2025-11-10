@@ -13,9 +13,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.admin.AdminDashboardActivity; // ⭐️ IMPORT
 import com.example.hearme.activities.profile.ProfileActivity;
+import com.example.hearme.activities.guide.GuideActivity;
 import com.example.hearme.api.ApiClient;
 import com.example.hearme.api.ConversationApiService;
 import com.example.hearme.models.ConversationResponseModel;
@@ -25,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChatDetailActivity extends AppCompatActivity {
+public class ChatDetailActivity extends BaseActivity {
 
     private static final String TAG = "ChatDetailActivity";
     private TextView tvHearContent;
@@ -71,12 +73,12 @@ public class ChatDetailActivity extends AppCompatActivity {
 
     private void confirmDelete() {
         new AlertDialog.Builder(this)
-                .setTitle("Delete Conversation")
-                .setMessage("Are you sure you want to delete this conversation?")
-                .setPositiveButton("Yes", (dialog, which) -> {
+                .setTitle(getString(R.string.chat_detail_delete_confirm_title))
+                .setMessage(getString(R.string.chat_detail_delete_confirm_message))
+                .setPositiveButton(getString(R.string.chat_detail_delete_yes), (dialog, which) -> {
                     deleteConversation();
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.chat_detail_delete_cancel), null)
                 .show();
     }
 
@@ -138,13 +140,15 @@ public class ChatDetailActivity extends AppCompatActivity {
         // 2. Check the role from SessionManager
         if (sessionManager.isAdmin()) {
             // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ Use string res
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
 
             navGuideAdmin.setOnClickListener(v -> {
-                Intent intent = new Intent(this, AdminDashboardActivity.class);
-                startActivity(intent);
-                finish(); // Finish current activity
+                if (!"admin".equals(activePage)) {
+                    Intent intent = new Intent(this, AdminDashboardActivity.class);
+                    startActivity(intent);
+                    finish(); // Finish current activity
+                }
             });
 
             if ("admin".equals(activePage)) {
@@ -153,14 +157,15 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         } else {
             // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // Use built-in icon
+            navGuideAdminText.setText(getString(R.string.nav_guide));
+            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
-                Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
-                // finish(); // Finish current activity
+                if (!"guide".equals(activePage)) {
+                    Intent intent = new Intent(this, GuideActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
+                }
             });
 
             if ("guide".equals(activePage)) {
@@ -178,13 +183,17 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         navHistory.setOnClickListener(v -> {
             // Already on this page, but finish() goes back to the list
-            finish();
+            if (!"history".equals(activePage)) {
+                finish();
+            }
         });
 
         navProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-            finish();
+            if (!"profile".equals(activePage)) {
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         // 4. Set highlight for the active page

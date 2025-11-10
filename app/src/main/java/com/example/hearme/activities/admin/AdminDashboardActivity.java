@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.history.ChatHistoryActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
@@ -46,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminDashboardActivity extends AppCompatActivity {
+public class AdminDashboardActivity extends BaseActivity {
 
     private TextView tvTotalUsers;
     private GridLayout containerEmergencyStats;
@@ -93,27 +94,36 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
     // --------------------------------------------------------------------
-    // ALL YOUR ORIGINAL METHODS ARE PERFECT. NO CHANGES NEEDED BELOW HERE.
-    // (setupBarChart, updateBarChart, loadDashboardData, showEmergencyUsers)
+    // (setupBarChart, updateBarChart are MODIFIED)
+    // (loadDashboardData, showEmergencyUsers are UNCHANGED)
     // --------------------------------------------------------------------
 
     private void setupBarChart() {
+        // --- ⭐️ Get theme-aware text color ⭐️ ---
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
+        int textColor = typedValue.data;
+        // --- ⭐️ End theme-aware color ⭐️ ---
+
         barChart.getDescription().setEnabled(false);
         barChart.setDrawGridBackground(false);
         barChart.setDrawBarShadow(false);
         barChart.setDrawValueAboveBar(true);
         barChart.setPinchZoom(true);
-        barChart.setNoDataText("No emergency data available");
+        barChart.setNoDataText(getString(R.string.admin_chart_no_data)); // ⭐️ USE STRING
+        barChart.setNoDataTextColor(textColor); // ⭐️ SET COLOR
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
         xAxis.setTextSize(12f);
+        xAxis.setTextColor(textColor); // ⭐️ SET COLOR
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setGranularity(1f);
         leftAxis.setTextSize(12f);
+        leftAxis.setTextColor(textColor); // ⭐️ SET COLOR
         barChart.getAxisRight().setEnabled(false);
     }
 
@@ -128,7 +138,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             index++;
         }
 
-        BarDataSet dataSet = new BarDataSet(entries, "Emergency Usage Frequency");
+        BarDataSet dataSet = new BarDataSet(entries, getString(R.string.admin_chart_description)); // ⭐️ USE STRING
 
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(getResources().getColor(android.R.color.holo_red_light, null));
@@ -142,7 +152,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
         dataSet.setColors(colors);
         dataSet.setValueTextSize(14f);
-        dataSet.setValueTextColor(getResources().getColor(android.R.color.black, null));
+
+        // --- ⭐️ Get theme-aware text color ⭐️ ---
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
+        int textColor = typedValue.data;
+        dataSet.setValueTextColor(textColor); // ⭐️ USE THEME COLOR
+        // --- ⭐️ End theme-aware color ⭐️ ---
 
         dataSet.setValueFormatter(new ValueFormatter() {
             @Override
@@ -166,7 +182,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
             public void onResponse(Call<AdminDashboardResponse> call, Response<AdminDashboardResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     AdminDashboardResponse res = response.body();
-                    tvTotalUsers.setText("Total Users: " + res.getTotalUsers());
+                    // ⭐️ USE STRING RESOURCE ⭐️
+                    tvTotalUsers.setText(getString(R.string.admin_total_users, res.getTotalUsers()));
                     updateBarChart(res);
 
                     containerEmergencyStats.removeAllViews();
@@ -233,7 +250,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         ProgressBar progressBar = sheetView.findViewById(R.id.progressBar);
         ListView listUsers = sheetView.findViewById(R.id.listUsers);
 
-        tvTitle.setText(categoryName);
+        tvTitle.setText(getString(R.string.admin_bottom_sheet_title, categoryName)); // ⭐️ USE STRING
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<GetEmergencyUsersResponse> call = api.getEmergencyUsers(categoryName);
@@ -278,7 +295,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                             listUsers.setAdapter(new ArrayAdapter<>(
                                     AdminDashboardActivity.this,
                                     android.R.layout.simple_list_item_1,
-                                    new String[]{"No users found for this category."}
+                                    new String[]{getString(R.string.admin_bottom_sheet_no_users)} // ⭐️ USE STRING
                             ));
                         }
                     } else {
@@ -300,83 +317,61 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
 
-    // --- ⬇️ NEW METHOD FOR DYNAMIC NAVIGATION ⬇️ ---
+    // --- ⬇️ DYNAMIC NAVIGATION ⬇️ ---
+    // (This method is already using string resources, so it's perfect)
 
-    /**
-     * Sets up the bottom navigation bar based on the user's role.
-     * @param activePage A string ("home", "history", "admin", "profile") to highlight the current page.
-     */
     private void setupBottomNavigation(String activePage) {
-        // 1. Get references to all 4 nav buttons
         View navHome = findViewById(R.id.nav_home);
         View navHistory = findViewById(R.id.nav_history);
-        View navGuideAdmin = findViewById(R.id.nav_guide_admin); // The dynamic button
+        View navGuideAdmin = findViewById(R.id.nav_guide_admin);
         View navProfile = findViewById(R.id.nav_profile);
 
-        // Get the inner parts of the dynamic button
         ImageView navGuideAdminIcon = findViewById(R.id.nav_guide_admin_icon);
         TextView navGuideAdminText = findViewById(R.id.nav_guide_admin_text);
 
-        // 2. Check the role from SessionManager
         if (sessionManager.isAdmin()) {
-            // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
-            navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ Use string res
+            navGuideAdminIcon.setImageResource(R.drawable.ic_admin);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Already on this page, do nothing or refresh
                 if (!"admin".equals(activePage)) {
                     Intent intent = new Intent(this, AdminDashboardActivity.class);
                     startActivity(intent);
                 }
             });
-
-            // Highlight if we are on the admin page
             if ("admin".equals(activePage)) {
-                navGuideAdmin.setBackgroundColor(0x55FFC107); // Semi-transparent yellow
+                navGuideAdmin.setBackgroundColor(0x55FFC107);
             }
-
         } else {
-            // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // (Requires ic_guide.png)
+            navGuideAdminText.setText(getString(R.string.nav_guide)); // ⭐️ Use string res
+            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
                 Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
             });
-
-            // Highlight if we are on the guide page
             if ("guide".equals(activePage)) {
                 navGuideAdmin.setBackgroundColor(0x55FFC107);
             }
         }
-
-        // 3. Set click listeners for the other 3 buttons
         navHome.setOnClickListener(v -> {
             if (!"home".equals(activePage)) {
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Go to top
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
-
         navHistory.setOnClickListener(v -> {
             if (!"history".equals(activePage)) {
                 Intent intent = new Intent(this, ChatHistoryActivity.class);
                 startActivity(intent);
             }
         });
-
         navProfile.setOnClickListener(v -> {
             if (!"profile".equals(activePage)) {
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
-
-        // 4. Set highlight for the active page (if not already set for admin/guide)
         if ("home".equals(activePage)) {
             navHome.setBackgroundColor(0x55FFC107);
         } else if ("history".equals(activePage)) {

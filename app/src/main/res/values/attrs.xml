@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- file: attrs.xml (values) -->
+<resources>
+    <!-- This declares your custom attribute for the theme -->
+    <attr name="navBarTextViewStyle" format="reference" />
+
+    <!-- ⭐️ ADD THIS BLOCK ⭐️ -->
+    <attr name="toolbarColor" format="color" />
+    <attr name="chartGridColor" format="color" />
+    <!-- ⭐️ END OF BLOCK ⭐️ -->
+</resources>

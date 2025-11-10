@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- file: string.xml (ms) -->
+<resources>
+    <string name="app_name">HearMe</string>
+
+    <!-- Guide Page -->
+    <string name="guide_emergency">Kecemasan</string>
+    <string name="guide_speak_hear">Cakap/Dengar</string>
+    <string name="guide_audio">Audio</string>
+    <string name="guide_pdf_desc">Halaman PDF</string>
+    <string name="guide_previous">Sebelum</string>
+    <string name="guide_next">Seterusnya</string>
+    <string name="guide_page_count">Muka %d / %d</string>
+    <string name="toast_pdf_not_found">Fail PDF tidak dijumpai</string>
+    <string name="toast_pdf_error">Ralat memuat PDF: %s</string>
+
+    <!-- Emergency Page -->
+    <string name="header_back_desc">kembali</string>
+
+    <string name="emergency_send_immediately">HANTAR SEGERA</string>
+    <string name="emergency_personal_contact">Kenalan Peribadi</string>
+    <string name="emergency_add_contact">+ Tambah Kenalan Baharu</string>
+    <string name="emergency_type_title">Jenis Kecemasan</string>
+    <string name="emergency_type_accident">Kemalangan</string>
+    <string name="emergency_type_theft">Kecurian</string>
+    <string name="emergency_type_health">Kesihatan</string>
+    <string name="emergency_type_fire">Kebakaran</string>
+    <string name="emergency_type_wildlife">Hidupan Liar</string>
+    <string name="emergency_type_injury">Kecederaan</string>
+
+    <string name="add_contact_title">Tambah Kenalan Baharu</string>
+    <string name="add_contact_name">Nama Kenalan</string>
+    <string name="add_contact_name_hint">cth., Umi, Abah</string>
+    <string name="add_contact_number">Nombor Telefon</string>
+    <string name="add_contact_number_hint">cth., 0123456789</string>
+    <string name="add_contact_save">Simpan Kenalan</string>
+    <string name="add_contact_existing">Kenalan Sedia Ada</string>
+    <string name="add_contact_empty">Anda belum menambah sebarang kenalan.</string>
+    <string name="add_contact_delete_title">Padam Kenalan</string>
+    <string name="add_contact_delete_confirm">Anda pasti mahu memadam %s?</string>
+    <string name="add_contact_delete_button">Padam</string>
+    <string name="item_contact_delete_desc">Padam Kenalan</string>
+    <string name="toast_session_expired">Sesi telah tamat</string>
+    <string name="toast_load_contacts_failed">Gagal memuatkan kenalan</string>
+    <string name="toast_delete_failed">Gagal memadam</string>
+    <string name="toast_contact_deleted">Kenalan dipadam</string>
+    <string name="toast_contact_fill_both">Sila masukkan nama dan nombor</string>
+    <string name="toast_contact_saving">Menyimpan...</string>
+
+    <string name="location_type_title">Pilih Jenis Lokasi</string>
+    <string name="location_type_current">Lokasi Semasa</string>
+    <string name="location_type_home">Alamat Rumah</string>
+    <string name="location_type_no_address">(Tiada alamat disimpan)</string>
+    <string name="toast_no_home_address">Tiada alamat rumah disimpan di profil anda.</string>
+    <string name="toast_no_location_found">Tiada lokasi ditemui. Sila cuba lagi.</string>
+
+    <string name="maps_title">Pilih Lokasi</string>
+    <string name="maps_pinned_location">Disemat: -</string>
+    <string name="maps_pinned_location_value">Disemat: %.6f, %.6f</string>
+    <string name="maps_choose_button">Pilih Lokasi</string>
+    <string name="maps_marker_title">Lokasi Anda</string>
+    <string name="toast_location_not_ready">Lokasi belum tersedia</string>
+    <string name="toast_location_not_found">Tidak mendapatkan lokasi</string>
+    <string name="toast_need_location_permission">Perlukan kebenaran lokasi</string>
+    <string name="toast_location_permission_denied">Kebenaran lokasi ditolak</string>
+
+    <string name="message_preview_title">Pratonton Mesej</string>
+    <string name="message_preview_loading">Memuatkan mesej...</string>
+    <string name="message_send_button">HANTAR</string>
+    <string name="message_template_standard">Nama saya %s. Saya ialah orang pekak. %s \n\nAlamat saya adalah: %s</string>
+    <string name="message_template_custom">Nama saya %s. Saya ialah orang pekak. Ini mesej kepada %s. \n\nAlamat saya adalah: %s</string>
+    <string name="message_type_instant">Saya memerlukan bantuan segera.</string>
+    <string name="message_type_accident">Saya terlibat dalam kemalangan. Perlukan bantuan kecemasan segera.</string>
+    <string name="message_type_theft">Terdapat kejadian pencurian. Mohon bantuan polis segera.</string>
+    <string name="message_type_health">Saya mempunyai kecemasan perubatan. Perlukan ambulans.</string>
+    <string name="message_type_fire">Terdapat kebakaran. Sila hantarkan bantuan bomba.</string>
+    <string name="message_type_wildlife">Terdapat serangan haiwan liar. Saya perlukan bantuan segera.</string>
+    <string name="message_type_injury">Saya mengalami kecederaan. Mohon bantuan perubatan.</string>
+    <string name="message_type_custom">Saya ingin menghubungi %s.</string>
+    <string name="message_type_default">Saya memerlukan bantuan.</string>
+    <string name="toast_record_saved">Rekod Disimpan</string>
+    <string name="toast_server_connect_fail">Gagal menyambung ke pelayan.</string>
+    <string name="toast_no_sms_app">Tiada aplikasi SMS ditemui</string>
+    <string name="toast_sms_fail">Gagal membuka SMS</string>
+
+    <!-- Audio Transcription Page -->
+    <string name="audio_transcription_title">Transkripsi Audio</string>
+    <string name="audio_transcription_upload_button">Muat Naik Fail Audio</string>
+    <string name="audio_transcription_no_file">Tiada fail dipilih</string>
+    <string name="audio_transcription_language_label">Pilih Bahasa Audio:</string>
+    <string name="audio_transcription_transcribe_button">Transkrip</string>
+    <string name="audio_transcription_result_label">Hasil Transkripsi:</string>
+    <string name="audio_transcription_hint">Transkripsi akan muncul di sini...</string>
+    <string name="audio_transcription_copy_button">Salin Transkripsi</string>
+
+    <string name="toast_file_selected">Fail dipilih: %s</string>
+    <string name="toast_file_select_error">Ralat memilih fail: %s</string>
+    <string name="toast_select_file_first">Sila pilih fail audio dahulu</string>
+    <string name="toast_transcribing">Sedang mentranskrip: %s</string>
+    <string name="toast_transcription_failed">Transkripsi gagal: %s</string>
+    <string name="toast_transcription_complete">Transkripsi selesai!</string>
+    <string name="toast_server_error">Ralat pelayan: %s</string>
+    <string name="toast_transcription_copied">Transkripsi disalin ke papan keratan</string>
+    <string name="toast_no_transcription_to_copy">Tiada transkripsi untuk disalin</string>
+
+    <!-- Speak And Hear Page -->
+    <string name="speak_hear_title_hear">Dengar dari orang biasa</string>
+    <string name="speak_hear_title_speak">Cakap dengan orang biasa</string>
+    <string name="speak_hear_lang_english">ENGLISH</string>
+    <string name="speak_hear_lang_malay">MALAYSIA</string>
+    <string name="speak_hear_button_reply">Balas</string>
+
+    <string name="toast_mic_permission_required">Kebenaran mikrofon diperlukan untuk pengecaman suara</string>
+    <string name="toast_language_not_supported">Bahasa tidak disokong. Cuba bahasa Inggeris.</string>
+    <string name="toast_language_malay">Bahasa Malaysia dipilih</string>
+    <string name="toast_language_english">English selected</string>
+    <string name="toast_speak_enter_text">Sila masukkan teks untuk diucapkan</string>
+    <string name="dialog_phrases_title">Frasa Biasa</string>
+    <string name="dialog_phrases_add">Tambah Frasa</string>
+    <string name="dialog_phrases_cancel">Batal</string>
+    <string name="dialog_add_phrase_title">Tambah Frasa Baharu</string>
+    <string name="dialog_add_phrase_hint">Masukkan frasa anda</string>
+    <string name="dialog_add_phrase_save">Simpan</string>
+    <string name="toast_add_phrase_empty">Sila masukkan frasa</string>
+    <string name="toast_add_phrase_login_required">Sila log masuk untuk menambah frasa</string>
+    <string name="toast_add_phrase_invalid_id">ID pengguna tidak sah</string>
+    <string name="toast_add_phrase_fail">Gagal menyimpan frasa</string>
+    <string name="toast_add_phrase_fail_network">Gagal menyimpan frasa (rangkaian)</string>
+    <string name="toast_tts_init_failed">Pemulaan teks-ke-suara gagal</string>
+    <string name="toast_tts_not_ready">Teks-ke-suara tidak sedia</string>
+    <string name="toast_speech_recognition_not_available">Pengecaman suara tidak tersedia</string>
+
+    <!-- Home Page -->
+    <string name="home_speak_to_non_deaf">Cakap dengan orang biasa</string>
+    <string name="home_hear_from_non_deaf">Dengar dari orang biasa</string>
+    <string name="home_audio_transcription">Transkripsi Fail Audio</string>
+    <string name="home_emergency_sms">SMS KECEMASAN</string>
+
+    <!-- Chat History Page -->
+    <string name="history_title">Sejarah</string>
+    <string name="history_delete_all">PADAM SEMUA</string>
+    <string name="history_toggle_messages">MESEJ</string>
+    <string name="history_toggle_emergency">KECEMASAN</string>
+    <string name="history_empty_chat_title">Tiada sejarah sembang lagi</string>
+    <string name="history_empty_chat_message">Perbualan anda akan muncul di sini\nsetelah anda mula menggunakan aplikasi</string>
+    <string name="history_empty_emergency_title">Tiada sejarah kecemasan lagi</string>
+    <string name="history_empty_emergency_message">Makluman kecemasan anda yang dihantar akan muncul di sini</string>
+
+    <!-- Chat Detail Page -->
+    <string name="chat_detail_title">Butiran Sembang</string>
+    <string name="chat_detail_hear_label">Dengar dari orang biasa</string>
+    <string name="chat_detail_speak_label">Cakap dengan orang biasa</string>
+    <string name="chat_detail_delete_button">PADAM</string>
+    <string name="chat_detail_delete_confirm_title">Padam Perbualan</string>
+    <string name="chat_detail_delete_confirm_message">Anda pasti mahu memadam perbualan ini?</string>
+    <string name="chat_detail_delete_yes">Ya</string>
+    <string name="chat_detail_delete_cancel">Batal</string>
+    <string name="chat_detail_loading">Memuatkan...</string>
+
+    <!-- Admin User Detail Page -->
+    <string name="admin_user_details_title">Butiran Pengguna</string>
+    <string name="admin_user_search_hint">Cari mengikut nama pengguna atau e-mel</string>
+    <string name="admin_user_search_button">Cari</string>
+    <string name="admin_user_list_empty">Tiada pengguna dijumpai.</string>
+    <string name="admin_user_list_email">E-mel: %s</string>
+    <string name="admin_user_list_phone">Telefon: %s</string>
+    <string name="admin_user_dialog_title">Maklumat Pengguna</string>
+    <string name="admin_user_dialog_info">👤 Nama Pengguna: %s\n📧 E-mel: %s\n🪪 Nama Penuh: %s\n🏠 Alamat: %s\n📞 Telefon: %s\n📅 Dibuat Pada: %s</string>
+
+    <!-- Admin Dashboard Page -->
+    <string name="admin_dashboard_title">Papan Pemuka Admin</string>
+    <string name="admin_total_users">Jumlah Pengguna: %d</string>
+    <string name="admin_view_user_details">Lihat Butiran Pengguna</string>
+    <string name="admin_chart_title">Carta Bar Kekerapan Kecemasan</string>
+    <string name="admin_chart_description">Kekerapan Penggunaan Kecemasan</string>
+    <string name="admin_chart_no_data">Tiada data kecemasan tersedia</string>
+    <string name="admin_grid_title">Penggunaan Kecemasan Mengikut Kategori:</string>
+    <string name="admin_bottom_sheet_title">Pengguna untuk %s</string>
+    <string name="admin_bottom_sheet_no_users">Tiada pengguna dijumpai untuk kategori ini.</string>
+
+    <!-- Profile Page -->
+    <string name="profile_title">Profil</string>
+    <string name="profile_text_size">Saiz Teks</string>
+    <string name="profile_theme_mode">Mod Gelap</string>
+    <string name="profile_language">Bahasa</string>
+    <string name="profile_edit_profile">Kemaskini Profil</string>
+    <string name="profile_log_out">Log Keluar</string>
+
+    <!-- Edit Profile Page -->
+    <string name="edit_profile_title">Kemaskini Profil</string>
+    <string name="edit_profile_username">Nama Pengguna</string>
+    <string name="edit_profile_username_hint">Masukkan nama pengguna anda</string>
+    <string name="edit_profile_full_name">Nama Penuh</string>
+    <string name="edit_profile_full_name_hint">Masukkan nama penuh anda</string>
+    <string name="edit_profile_email">E-mel</string>
+    <string name="edit_profile_email_hint">Masukkan e-mel anda</string>
+    <string name="edit_profile_address">Alamat</string>
+    <string name="edit_profile_address_hint">Masukkan alamat rumah anda</string>
+    <string name="edit_profile_old_password">Kata Laluan Lama</string>
+    <string name="edit_profile_old_password_hint">Masukkan kata laluan semasa anda</string>
+    <string name="edit_profile_new_password">Kata Laluan Baharu</string>
+    <string name="edit_profile_new_password_hint">Masukkan kata laluan baharu</string>
+    <string name="edit_profile_confirm_password">Sahkan Kata Laluan Baharu</string>
+    <string name="edit_profile_confirm_password_hint">Sahkan kata laluan baharu anda</string>
+    <string name="edit_profile_save_button">Simpan Perubahan</string>
+
+    <string name="toast_edit_profile_fill_required">Sila isi Nama Pengguna, Nama Penuh, dan E-mel</string>
+    <string name="toast_edit_profile_old_pass_required">Sila masukkan kata laluan lama anda untuk menetapkan yang baharu</string>
+    <string name="toast_edit_profile_new_pass_required">Sila masukkan kata laluan baharu</string>
+    <string name="toast_edit_profile_pass_mismatch">Kata laluan baharu tidak sepadan</string>
+    <string name="toast_edit_profile_session_expired">Sesi telah tamat, sila log masuk semula</string>
+    <string name="toast_edit_profile_success">Profil berjaya dikemaskini!</string>
+
+    <!-- New Profile Dialogs -->
+    <string name="dialog_select_language">Pilih Bahasa</string>
+    <string name="dialog_select_text_size">Pilih Saiz Teks</string>
+    <string name="text_size_small">Kecil</string>
+    <string name="text_size_medium">Sederhana</string>
+    <string name="text_size_large">Besar</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">UTAMA</string>
+    <string name="nav_history">SEJARAH</string>
+    <string name="nav_guide">PANDUAN</string>
+    <string name="nav_admin">ADMIN</string>
+    <string name="nav_profile">PROFIL</string>
+</resources>

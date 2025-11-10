@@ -15,11 +15,13 @@ import androidx.appcompat.app.AppCompatActivity; // ⭐️ Ensure this is the im
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.hearme.R;
- // ⭐️ Ensure this is extended
+// ⭐️ Ensure this is extended
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.admin.AdminDashboardActivity;
 import com.example.hearme.activities.history.ChatHistoryActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
+import com.example.hearme.activities.guide.GuideActivity;
 import com.example.hearme.api.ApiClient;
 import com.example.hearme.api.EmergencyApiService;
 import com.example.hearme.models.CustomCallModel;
@@ -32,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure this extends BaseActivity
+public class EmergencyActivity extends BaseActivity { // ⭐️ Make sure this extends BaseActivity
 
     private Button btnSegera;
     private LinearLayout containerCustomButtons;
@@ -66,12 +68,8 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
         ConstraintLayout wildlifeCell = findViewById(R.id.btn_wildlife_cell);
         ConstraintLayout injuryCell = findViewById(R.id.btn_injury_cell);
 
-        // ⭐️ --- START FIX: Sending English keys --- ⭐️
-
-        // "Segera" is a special case, it's fine as is.
+        // This part is correct, it sends the English keys
         btnSegera.setOnClickListener(v -> startLocationTypeFlow("Instant", null, null));
-
-        // Grid cell clicks now send the English category name
         accidentCell.setOnClickListener(v -> startLocationTypeFlow("Accident", null, null));
         theftCell.setOnClickListener(v -> startLocationTypeFlow("Theft", null, null));
         healthCell.setOnClickListener(v -> startLocationTypeFlow("Health", null, null));
@@ -79,7 +77,6 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
         wildlifeCell.setOnClickListener(v -> startLocationTypeFlow("Wildlife", null, null));
         injuryCell.setOnClickListener(v -> startLocationTypeFlow("Injury", null, null));
 
-        // ⭐️ --- END FIX --- ⭐️
 
         btnAddCustomCall.setOnClickListener(v -> {
             Intent addIntent = new Intent(EmergencyActivity.this, AddCustomCallActivity.class);
@@ -92,7 +89,6 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
     @Override
     protected void onResume() {
         super.onResume();
-        // This will now run EVERY TIME you return to this page
         fetchCustomCalls();
     }
 
@@ -105,7 +101,7 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
     }
 
     private void setupBottomNavigation(String activePage) {
-        // ... (This method is correct, no changes needed) ...
+        // ⭐️ UPDATED TO USE STRING RESOURCES ⭐️
         View bottomNavView = findViewById(R.id.bottom_navigation);
         if (bottomNavView == null) {
             Log.e(TAG, "FATAL: bottom_navigation view not found.");
@@ -122,7 +118,7 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
         ImageView navGuideAdminIcon = bottomNavView.findViewById(R.id.nav_guide_admin_icon);
         TextView navGuideAdminText = bottomNavView.findViewById(R.id.nav_guide_admin_text);
         if (sessionManager.isAdmin()) {
-            navGuideAdminText.setText("ADMIN");
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ USE STRING
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin);
             navGuideAdmin.setOnClickListener(v -> {
                 if (!"admin".equals(activePage)) {
@@ -132,11 +128,15 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
                 }
             });
         } else {
-            navGuideAdminText.setText("GUIDE");
+            // --- USER ---
+            navGuideAdminText.setText(getString(R.string.nav_guide));
             navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
+
             navGuideAdmin.setOnClickListener(v -> {
                 if (!"guide".equals(activePage)) {
-                    Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, GuideActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
                 }
             });
         }
@@ -178,7 +178,7 @@ public class EmergencyActivity extends AppCompatActivity { // ⭐️ Make sure t
 
     private void startLocationTypeFlow(String jenis, String customName, String customNumber) {
         Intent i = new Intent(EmergencyActivity.this, LocationTypeActivity.class);
-        i.putExtra("jenis", jenis); // This now passes "Accident", "Theft", etc.
+        i.putExtra("jenis", jenis);
         if (customName != null) i.putExtra("custom_name", customName);
         if (customNumber != null) i.putExtra("custom_number", customNumber);
         startActivity(i);

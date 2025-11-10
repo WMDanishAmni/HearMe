@@ -31,8 +31,10 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.activities.MainActivity;
 import com.example.hearme.activities.admin.AdminDashboardActivity; // ⭐️ IMPORT
+import com.example.hearme.activities.guide.GuideActivity;
 import com.example.hearme.activities.history.ChatHistoryActivity;
 import com.example.hearme.activities.profile.ProfileActivity;
 import com.example.hearme.adapter.PhraseAdapter;
@@ -56,7 +58,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class SpeakAndHearActivity extends BaseActivity implements TextToSpeech.OnInitListener {
     private static final String TAG = "SpeakAndHearActivity";
 
     // Session manager
@@ -94,6 +96,15 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     // Flag to prevent multiple saves
     private boolean isSaving = false;
 
+    // --- ⭐️ Theme-aware colors --- ⭐️
+    private int colorOnPrimary;
+    private int colorTextSecondary;
+    private int colorTextPrimary;
+    private int colorHint;
+    private int colorSurface;
+    private int colorHoloBlue;
+    // ⭐️ --- End theme-aware colors --- ⭐️
+
     // Activity result launchers
     private final ActivityResultLauncher<Intent> speechRecognizerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -113,7 +124,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
                         if (tvTranscription != null) {
                             tvTranscription.setText(transcriptionHistory);
-                            tvTranscription.setTextColor(Color.BLACK);
+                            tvTranscription.setTextColor(colorTextPrimary); // ⭐️ USE THEME COLOR
                         }
                     }
                 }
@@ -128,9 +139,10 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                 if (isGranted) {
                     startSpeechRecognition();
                 } else {
+                    // ⭐️ USE STRING ⭐️
                     String message = isMalay ?
-                            "Kebenaran mikrofon diperlukan untuk pengecaman suara" :
-                            "Microphone permission is required for speech recognition";
+                            getString(R.string.toast_mic_permission_required) :
+                            getString(R.string.toast_mic_permission_required);
                     Toast.makeText(SpeakAndHearActivity.this, message, Toast.LENGTH_LONG).show();
                 }
             });
@@ -138,13 +150,13 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate called");
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        // ⭐️ REMOVED: AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        // BaseActivity now handles this
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speak_to_nondeaf);
 
         sessionManager = new SessionManager(this);
 
-        // You can remove these toasts if you want
         if (sessionManager.isLoggedIn()) {
             String u = sessionManager.getUsername();
             Toast.makeText(this, "Session active: " + (u != null ? u : "user"), Toast.LENGTH_LONG).show();
@@ -160,9 +172,10 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
         isHearMode = "HEAR".equals(initialMode);
         Log.d(TAG, "Initial mode: " + initialMode);
 
+        loadThemeColors(); // ⭐️ ADDED
         initializeViews();
         setupLanguageToggle();
-        setupClickListeners(); // ⭐️ This method is now MODIFIED
+        setupClickListeners();
         initializeTextToSpeech();
         updateModeDisplay();
         updateLanguageToggle();
@@ -170,9 +183,32 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
         fetchCustomPhrases();
 
-        // ⭐️ CALL TO NEW NAV METHOD ⭐️
-        setupBottomNavigation("home"); // This is part of the "home" flow
+        setupBottomNavigation("home");
     }
+
+    // ⭐️ --- ADDED THIS NEW METHOD --- ⭐️
+    private void loadThemeColors() {
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true);
+        colorOnPrimary = typedValue.data;
+
+        getTheme().resolveAttribute(android.R.attr.textColorSecondary, typedValue, true);
+        colorTextSecondary = typedValue.data;
+
+        getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
+        colorTextPrimary = typedValue.data;
+
+        getTheme().resolveAttribute(android.R.attr.textColorHint, typedValue, true);
+        colorHint = typedValue.data;
+
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorSurface, typedValue, true);
+        colorSurface = typedValue.data;
+
+        // This color is not in the theme, so we load it from resources
+        colorHoloBlue = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
+    }
+    // ⭐️ --- END NEW METHOD --- ⭐️
 
     @SuppressLint("WrongViewCast")
     private void initializeViews() {
@@ -207,7 +243,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
         currentLanguage = languageCode;
         isMalay = languageCode.equals("ms-MY");
         updateLanguageToggle();
-        updateUITexts();
+        updateUITexts(); // Your original method
 
         if (textToSpeech != null && isTTSReady) {
             Locale locale = isMalay ? new Locale("ms", "MY") : Locale.US;
@@ -215,31 +251,32 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 result = textToSpeech.setLanguage(Locale.US);
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    // ⭐️ USE STRING ⭐️
                     String message = isMalay ?
-                            "Bahasa tidak disokong. Cuba bahasa Inggeris." :
-                            "Language not supported. Try English.";
+                            getString(R.string.toast_language_not_supported) :
+                            getString(R.string.toast_language_not_supported);
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 }
             }
         }
         fetchCustomPhrases();
-        String message = isMalay ? "Bahasa Malaysia dipilih" : "English selected";
+        // ⭐️ USE STRING ⭐️
+        String message = isMalay ? getString(R.string.toast_language_malay) : getString(R.string.toast_language_english);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void updateLanguageToggle() {
-        // (This method is unchanged)
         Log.d(TAG, "updateLanguageToggle called");
         if (currentLanguage.equals("en-US")) {
             btnEnglish.setBackgroundResource(R.drawable.language_selected);
-            btnEnglish.setTextColor(Color.WHITE);
+            btnEnglish.setTextColor(colorOnPrimary); // ⭐️ USE THEME COLOR
             btnMalay.setBackgroundResource(R.drawable.language_unselected);
-            btnMalay.setTextColor(Color.parseColor("#666666"));
+            btnMalay.setTextColor(colorTextSecondary); // ⭐️ USE THEME COLOR
         } else {
             btnMalay.setBackgroundResource(R.drawable.language_selected);
-            btnMalay.setTextColor(Color.WHITE);
+            btnMalay.setTextColor(colorOnPrimary); // ⭐️ USE THEME COLOR
             btnEnglish.setBackgroundResource(R.drawable.language_unselected);
-            btnEnglish.setTextColor(Color.parseColor("#666666"));
+            btnEnglish.setTextColor(colorTextSecondary); // ⭐️ USE THEME COLOR
         }
     }
 
@@ -283,7 +320,10 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                 Log.d(TAG, "Added to temporary messages: " + text);
                 speakText(text);
             } else {
-                String message = isMalay ? "Sila masukkan teks untuk diucapkan" : "Please enter text to speak";
+                // ⭐️ USE STRING ⭐️
+                String message = isMalay ?
+                        getString(R.string.toast_speak_enter_text) :
+                        getString(R.string.toast_speak_enter_text);
                 Toast.makeText(SpeakAndHearActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
@@ -304,16 +344,13 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
             showPhrasesDialog();
             return true;
         });
-
-        // ⭐️ REMOVED: setupBottomNavigation();
-        // This is now called from onCreate()
     }
 
     private void showPhrasesDialog() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "showPhrasesDialog called");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(isMalay ? "Frasa Biasa" : "Common Phrases");
+        builder.setTitle(isMalay ? "Frasa Biasa" : "Common Phrases"); // ⭐️ YOUR LOGIC
         List<PhraseItem> phrasesList = preparePhrasesList();
         PhraseAdapter adapter = new PhraseAdapter(this, phrasesList);
         builder.setAdapter(adapter, (dialog, which) -> {
@@ -329,16 +366,16 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                 etMessage.setSelection(etMessage.getText().length());
             }
         });
-        builder.setNeutralButton(isMalay ? "Tambah Frasa" : "Add Phrases", (dialog, which) -> {
+        builder.setNeutralButton(isMalay ? "Tambah Frasa" : "Add Phrases", (dialog, which) -> { // ⭐️ YOUR LOGIC
             showAddPhraseDialog();
         });
-        builder.setNegativeButton(isMalay ? "Batal" : "Cancel", null);
+        builder.setNegativeButton(isMalay ? "Batal" : "Cancel", null); // ⭐️ YOUR LOGIC
         builder.show();
     }
 
 
     private List<PhraseItem> preparePhrasesList() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "preparePhrasesList called");
         List<PhraseItem> items = new ArrayList<>();
         Map<String, List<CustomPhraseModel>> customCategoryMap = new HashMap<>();
@@ -442,10 +479,10 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
 
     private void showAddPhraseDialog() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "showAddPhraseDialog called");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(isMalay ? "Tambah Frasa Baharu" : "Add New Phrase");
+        builder.setTitle(isMalay ? "Tambah Frasa Baharu" : "Add New Phrase"); // ⭐️ YOUR LOGIC
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(50, 20, 50, 20);
@@ -456,36 +493,36 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                         isMalay ? "Ucapan" : "Greetings",
                         isMalay ? "Penghargaan" : "Thanks",
                         isMalay ? "Pertanyaan" : "Questions"
-                });
+                }); // ⭐️ YOUR LOGIC
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         EditText input = new EditText(this);
-        input.setHint(isMalay ? "Masukkan frasa anda" : "Enter your phrase");
+        input.setHint(isMalay ? "Masukkan frasa anda" : "Enter your phrase"); // ⭐️ YOUR LOGIC
         layout.addView(spinner);
         layout.addView(input);
         builder.setView(layout);
-        builder.setPositiveButton(isMalay ? "Simpan" : "Save", (dialog, which) -> {
+        builder.setPositiveButton(isMalay ? "Simpan" : "Save", (dialog, which) -> { // ⭐️ YOUR LOGIC
             String category = spinner.getSelectedItem().toString();
             String phrase = input.getText().toString().trim();
             if (!phrase.isEmpty()) saveCustomPhrase(category, phrase);
             else
-                Toast.makeText(this, isMalay ? "Sila masukkan frasa" : "Please enter a phrase", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, isMalay ? "Sila masukkan frasa" : "Please enter a phrase", Toast.LENGTH_SHORT).show(); // ⭐️ YOUR LOGIC
         });
-        builder.setNegativeButton(isMalay ? "Batal" : "Cancel", null);
+        builder.setNegativeButton(isMalay ? "Batal" : "Cancel", null); // ⭐️ YOUR LOGIC
         builder.show();
     }
 
     private void saveCustomPhrase(String category, String phrase) {
-        // (This method is unchanged)
+        // ⭐️ UPDATED TO USE STRING RESOURCES FOR TOASTS ⭐️
         Log.d(TAG, "saveCustomPhrase called: " + category + ", " + phrase);
         if (sessionManager == null) sessionManager = new SessionManager(this);
         if (!sessionManager.isLoggedIn()) {
-            Toast.makeText(this, isMalay ? "Sila log masuk untuk menambah frasa" : "Please log in to add phrases", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_add_phrase_login_required), Toast.LENGTH_SHORT).show();
             return;
         }
         int userId = sessionManager.getUserId();
         if (userId <= 0) {
-            Toast.makeText(this, isMalay ? "ID pengguna tidak sah" : "Invalid user id", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_add_phrase_invalid_id), Toast.LENGTH_SHORT).show();
             return;
         }
         CustomPhraseApiService apiService = ApiClient.getClient().create(CustomPhraseApiService.class);
@@ -497,18 +534,18 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                     Toast.makeText(SpeakAndHearActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     fetchCustomPhrases();
                 } else {
-                    Toast.makeText(SpeakAndHearActivity.this, isMalay ? "Gagal menyimpan frasa" : "Failed to save phrase", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SpeakAndHearActivity.this, getString(R.string.toast_add_phrase_fail), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<CustomPhraseResponseModel> call, Throwable t) {
-                Toast.makeText(SpeakAndHearActivity.this, isMalay ? "Gagal menyimpan frasa (rangkaian)" : "Failed to save phrase (network)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpeakAndHearActivity.this, getString(R.string.toast_add_phrase_fail_network), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void fetchCustomPhrases() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "fetchCustomPhrases called");
         if (sessionManager == null) sessionManager = new SessionManager(this);
         int userId = sessionManager.isLoggedIn() ? sessionManager.getUserId() : 1;
@@ -533,19 +570,19 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void switchToHearMode() {
-        // (This method is unchanged)
+        // ⭐️ UPDATED TO USE THEME COLOR ⭐️
         Log.d(TAG, "switchToHearMode called");
         isHearMode = true;
         updateModeDisplay();
         updateUITexts();
         if (!transcriptionHistory.isEmpty() && tvTranscription != null) {
             tvTranscription.setText(transcriptionHistory);
-            tvTranscription.setTextColor(Color.BLACK);
+            tvTranscription.setTextColor(colorTextPrimary); // ⭐️ USE THEME COLOR
         }
     }
 
     private void switchToSpeakMode() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "switchToSpeakMode called");
         isHearMode = false;
         updateModeDisplay();
@@ -553,27 +590,27 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void updateModeDisplay() {
-        // (This method is unchanged)
+        // ⭐️ UPDATED TO USE THEME COLOR ⭐️
         Log.d(TAG, "updateModeDisplay called, isHearMode: " + isHearMode);
         if (isHearMode) {
             hearModeLayout.setVisibility(View.VISIBLE);
             speakModeLayout.setVisibility(View.GONE);
             toggleHearFrom.setCardBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
             toggleHearFrom.setCardElevation(8f);
-            toggleSpeakTo.setCardBackgroundColor(getResources().getColor(android.R.color.background_light));
+            toggleSpeakTo.setCardBackgroundColor(colorSurface); // ⭐️ USE THEME COLOR
             toggleSpeakTo.setCardElevation(3f);
         } else {
             hearModeLayout.setVisibility(View.GONE);
             speakModeLayout.setVisibility(View.VISIBLE);
             toggleSpeakTo.setCardBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
             toggleSpeakTo.setCardElevation(8f);
-            toggleHearFrom.setCardBackgroundColor(getResources().getColor(android.R.color.background_light));
+            toggleHearFrom.setCardBackgroundColor(colorSurface); // ⭐️ USE THEME COLOR
             toggleHearFrom.setCardElevation(3f);
         }
     }
 
     private void updateUITexts() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "updateUITexts called, isMalay: " + isMalay);
         if (isMalay) {
             if (tvMessageLabel != null) tvMessageLabel.setText("Masukkan mesej anda:");
@@ -597,7 +634,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void initializeTextToSpeech() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "initializeTextToSpeech called");
         try {
             textToSpeech = new TextToSpeech(this, this);
@@ -609,7 +646,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
     @Override
     public void onInit(int status) {
-        // (This method is unchanged)
+        // ⭐️ UPDATED TO USE STRING RESOURCES FOR TOASTS ⭐️
         Log.d(TAG, "onInit called with status: " + status);
         try {
             if (textToSpeech == null) {
@@ -623,8 +660,8 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                     result = textToSpeech.setLanguage(Locale.US);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         String message = isMalay ?
-                                "Bahasa tidak disokong. Cuba bahasa Inggeris." :
-                                "Language not supported. Try English.";
+                                getString(R.string.toast_language_not_supported) :
+                                getString(R.string.toast_language_not_supported);
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                         isTTSReady = false;
                     } else {
@@ -639,8 +676,8 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
                 }
             } else {
                 String message = isMalay ?
-                        "Pemulaan teks-ke-suara gagal" :
-                        "Text-to-speech initialization failed";
+                        getString(R.string.toast_tts_init_failed) :
+                        getString(R.string.toast_tts_init_failed);
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 isTTSReady = false;
             }
@@ -651,11 +688,13 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void speakText(String text) {
-        // (This method is unchanged)
+        // ⭐️ UPDATED TO USE STRING RESOURCES FOR TOASTS ⭐️
         Log.d(TAG, "speakText called: " + text);
         try {
             if (textToSpeech == null || !isTTSReady) {
-                String message = isMalay ? "Teks-ke-suara tidak sedia" : "Text-to-speech not ready";
+                String message = isMalay ?
+                        getString(R.string.toast_tts_not_ready) :
+                        getString(R.string.toast_tts_not_ready);
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -673,7 +712,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void checkPermissionAndStartSpeechRecognition() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "checkPermissionAndStartSpeechRecognition called");
         try {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
@@ -690,31 +729,31 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void startSpeechRecognition() {
-        // (This method is unchanged)
+        // ⭐️ UPDATED TO USE THEME COLOR AND STRING RESOURCES ⭐️
         Log.d(TAG, "startSpeechRecognition called");
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, currentLanguage);
         if (isMalay) {
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Mula bercakap...");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Mula bercakap..."); // ⭐️ YOUR LOGIC
         } else {
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Start speaking...");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Start speaking..."); // ⭐️ YOUR LOGIC
         }
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         try {
             isListening = true;
             updateMicrophoneButton();
             if (isMalay) {
-                tvTranscription.setText("Mendengar...");
+                tvTranscription.setText("Mendengar..."); // ⭐️ YOUR LOGIC
             } else {
-                tvTranscription.setText("Listening...");
+                tvTranscription.setText("Listening..."); // ⭐️ YOUR LOGIC
             }
-            tvTranscription.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
+            tvTranscription.setTextColor(colorHoloBlue); // ⭐️ USE THEME COLOR
             speechRecognizerLauncher.launch(intent);
         } catch (Exception e) {
             String errorMessage = isMalay ?
-                    "Pengecaman suara tidak tersedia" :
-                    "Speech recognition not available";
+                    getString(R.string.toast_speech_recognition_not_available) :
+                    getString(R.string.toast_speech_recognition_not_available);
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             isListening = false;
             updateMicrophoneButton();
@@ -722,7 +761,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void updateMicrophoneButton() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         try {
             if (btnMicrophone != null) {
                 btnMicrophone.setAlpha(isListening ? 0.7f : 1.0f);
@@ -732,13 +771,12 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
         }
     }
 
-    // --- ⭐️ REPLACED THIS ENTIRE METHOD ⭐️ ---
-
     /**
      * Sets up the bottom navigation bar based on the user's role.
      * @param activePage A string ("home", "history", "admin", "profile") to highlight the current page.
      */
     private void setupBottomNavigation(String activePage) {
+        // ⭐️ UPDATED TO USE STRING RESOURCES ⭐️
         View bottomNavView = findViewById(R.id.bottom_navigation);
         if (bottomNavView == null) {
             Log.e(TAG, "FATAL: bottom_navigation view not found.");
@@ -758,7 +796,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
         // 2. Check the role from SessionManager
         if (sessionManager.isAdmin()) {
             // --- ADMIN ---
-            navGuideAdminText.setText("ADMIN");
+            navGuideAdminText.setText(getString(R.string.nav_admin)); // ⭐️ USE STRING
             navGuideAdminIcon.setImageResource(R.drawable.ic_admin); // (Requires ic_admin.png)
 
             navGuideAdmin.setOnClickListener(v -> {
@@ -773,13 +811,15 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
         } else {
             // --- USER ---
-            navGuideAdminText.setText("GUIDE");
-            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help); // Use built-in icon
+            navGuideAdminText.setText(getString(R.string.nav_guide));
+            navGuideAdminIcon.setImageResource(android.R.drawable.ic_menu_help);
 
             navGuideAdmin.setOnClickListener(v -> {
-                // Intent intent = new Intent(this, GuideActivity.class);
-                // startActivity(intent);
-                Toast.makeText(this, "Guide page coming soon", Toast.LENGTH_SHORT).show();
+                if (!"guide".equals(activePage)) {
+                    Intent intent = new Intent(this, GuideActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
+                }
             });
 
             if ("guide".equals(activePage)) {
@@ -828,7 +868,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
     }
 
     private void saveConversationToDatabase() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         if (isSaving) return;
         if (sessionManager == null) sessionManager = new SessionManager(this);
         if (!sessionManager.isLoggedIn()) {
@@ -872,7 +912,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
     @Override
     protected void onPause() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         super.onPause();
         try {
             if (textToSpeech != null && textToSpeech.isSpeaking()) {
@@ -885,7 +925,7 @@ public class SpeakAndHearActivity extends AppCompatActivity implements TextToSpe
 
     @Override
     protected void onDestroy() {
-        // (This method is unchanged)
+        // (This method is unchanged from your original)
         Log.d(TAG, "onDestroy called");
         saveConversationToDatabase(); // Save one last time
         try {

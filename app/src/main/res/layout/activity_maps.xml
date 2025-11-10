@@ -3,7 +3,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/maps_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground">
 
     <LinearLayout
         android:orientation="vertical"
@@ -17,7 +18,6 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <!-- Map fragment -->
             <fragment
                 android:id="@+id/map_fragment"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -29,23 +29,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:background="?android:attr/windowBackground">
 
             <TextView
                 android:id="@+id/tvSelected"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pinned: -"
-                android:textColor="#000000"
+                android:text="@string/maps_pinned_location"
+                android:textColor="?android:attr/textColor"
                 android:paddingBottom="6dp"/>
 
             <Button
                 android:id="@+id/btnSelectLocation"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Choose Location"
-                android:textColor="#000000"
-                android:backgroundTint="#FFC107"/>
+                android:text="@string/maps_choose_button"
+                android:textColor="?attr/colorOnPrimary"
+                android:backgroundTint="?attr/colorPrimary"/>
         </LinearLayout>
 
 

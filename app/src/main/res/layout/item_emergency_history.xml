@@ -6,41 +6,43 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_emergency_type"
+            style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Jenis Kecemasan"
-            android:textColor="#D32F2F"
-            android:textSize="16sp"
+            android:textColor="@color/emergency_red"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_emergency_details"
+            style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Butiran lokasi dan mesej..."
-            android:textColor="#333333"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_emergency_timestamp"
+            style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="end"
             android:text="01 Nov 2025, 10:30 AM"
-            android:textColor="#999999"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>

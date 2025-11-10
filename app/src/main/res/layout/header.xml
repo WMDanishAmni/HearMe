@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- file: header.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header_layout"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:background="#FFC107"
+    android:layout_height="75dp"
+    android:background="?attr/colorPrimary"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="12dp"
@@ -15,9 +16,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="15dp"
-        android:contentDescription="back"
-
-        android:src="@drawable/ic_back_arrow" />
+        android:contentDescription="@string/header_back_desc"
+        android:src="@drawable/ic_back_arrow"
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageView
         android:id="@+id/header_logo"
@@ -25,5 +26,6 @@
         android:layout_height="56dp"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        android:contentDescription="@string/app_name" />
 </LinearLayout>

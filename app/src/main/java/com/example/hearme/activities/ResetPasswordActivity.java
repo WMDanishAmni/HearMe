@@ -13,7 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ResetPasswordActivity extends AppCompatActivity {
+public class ResetPasswordActivity extends BaseActivity {
 
     private EditText etEmail, etNewPassword, etConfirmPassword;
     private Button btnResetPassword;

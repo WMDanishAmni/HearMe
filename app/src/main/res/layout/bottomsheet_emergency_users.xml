@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- file: bottomsheet_emergency_users.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="20dp"
     android:background="@drawable/rounded_sheet_bg"
@@ -9,12 +10,13 @@
 
     <TextView
         android:id="@+id/tvCategoryTitle"
+        style="?android:attr/textViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Emergency Type"
+        tools:text="Emergency Type"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColor"
         android:gravity="center"
         android:layout_marginBottom="12dp" />
 

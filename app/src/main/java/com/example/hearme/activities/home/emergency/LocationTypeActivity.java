@@ -11,9 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.models.SessionManager;
 
-public class LocationTypeActivity extends AppCompatActivity {
+public class LocationTypeActivity extends BaseActivity {
 
     private static final int REQ_MAP = 3001;
     private SessionManager sessionManager;
@@ -48,7 +49,8 @@ public class LocationTypeActivity extends AppCompatActivity {
 
         btnRumah.setOnClickListener(v -> {
             if (alamatRumah == null || alamatRumah.isEmpty()) {
-                Toast.makeText(this, "No home address is saved in your profile.", Toast.LENGTH_LONG).show();
+                // ⭐️ USE STRING ⭐️
+                Toast.makeText(this, getString(R.string.toast_no_home_address), Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -66,7 +68,6 @@ public class LocationTypeActivity extends AppCompatActivity {
     private void setupHeader() {
         View header = findViewById(R.id.header_layout);
         if (header != null) {
-            // --- (FIX) Using the correct ID from your header.xml ---
             View btnBack = header.findViewById(R.id.btn_back_header);
             if (btnBack != null) {
                 btnBack.setOnClickListener(v -> finish());
@@ -79,13 +80,13 @@ public class LocationTypeActivity extends AppCompatActivity {
         if (alamatRumah != null && !alamatRumah.isEmpty()) {
             tvAlamatRumah.setText(alamatRumah);
         } else {
-            tvAlamatRumah.setText("(No location saved)");
+            // ⭐️ USE STRING ⭐️
+            tvAlamatRumah.setText(getString(R.string.location_type_no_address));
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // (This function is correct)
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_MAP) {
             if (resultCode == RESULT_OK && data != null) {
@@ -105,7 +106,8 @@ public class LocationTypeActivity extends AppCompatActivity {
 
                 startActivity(i);
             } else {
-                Toast.makeText(this, "No location found. Please try again.", Toast.LENGTH_LONG).show();
+                // ⭐️ USE STRING ⭐️
+                Toast.makeText(this, getString(R.string.toast_no_location_found), Toast.LENGTH_LONG).show();
             }
         }
     }

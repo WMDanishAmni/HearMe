@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- file: activity_admin_dashboard.xml -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="?android:attr/windowBackground"
     tools:context=".activities.admin.AdminDashboardActivity">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,19 +29,20 @@
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="#E0E0E0"
+        android:background="?attr/toolbarColor"
         app:layout_constraintTop_toBottomOf="@id/header_layout"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/tvToolbarTitle"
+            style="?android:attr/textViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Admin Dashboard"
+            android:text="@string/admin_dashboard_title"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="?android:attr/textColor"
             android:layout_centerInParent="true" />
 
         <ImageButton
@@ -54,7 +54,7 @@
             android:src="@android:drawable/ic_popup_sync"
             android:contentDescription="Refresh"
             android:padding="6dp"
-            app:tint="#333333" />
+            app:tint="?android:attr/textColorSecondary" />
 
     </RelativeLayout>
 
@@ -82,33 +82,36 @@
 
                 <TextView
                     android:id="@+id/tvTotalUsers"
+                    style="?android:attr/textViewStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Total Users: 0"
+                    tools:text="Total Users: 0"
                     android:textSize="18sp"
                     android:padding="8dp"
-                    android:background="#FFF8E1"
-                    android:textColor="#000000" />
+                    android:background="?attr/colorSurface"
+                    android:textColor="?android:attr/textColor" />
 
                 <Button
                     android:id="@+id/btnUserDetails"
+                    style="?android:attr/buttonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View User Details"
-                    android:backgroundTint="#FFC107"
-                    android:textColor="#000000"
+                    android:text="@string/admin_view_user_details"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_marginStart="8dp"
                     android:padding="10dp" />
             </LinearLayout>
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bar Chart for Frequently Used Emergencies"
+                android:text="@string/admin_chart_title"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#000000"
+                android:textColor="?android:attr/textColor"
                 android:layout_marginBottom="8dp" />
 
             <com.github.mikephil.charting.charts.BarChart
@@ -118,12 +121,13 @@
                 android:layout_marginBottom="24dp" />
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Emergency Usage by Category:"
+                android:text="@string/admin_grid_title"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#000000"
+                android:textColor="?android:attr/textColor"
                 android:layout_marginBottom="8dp" />
 
             <GridLayout
@@ -134,7 +138,7 @@
                 android:rowCount="3"
                 android:alignmentMode="alignMargins"
                 android:useDefaultMargins="false"
-                android:background="#F8F8F8"
+                android:background="?attr/colorSurface"
                 android:padding="0dp"
                 android:layout_marginBottom="24dp" />
         </LinearLayout>
@@ -144,7 +148,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -165,14 +169,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_home"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="HOME"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_home"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -190,14 +194,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_recent_history"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="HISTORY"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_history"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -217,16 +221,16 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_admin"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
 
             <TextView
                 android:id="@+id/nav_guide_admin_text"
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="ADMIN"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_admin"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -244,14 +248,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_profile"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="PROFILE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_profile"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

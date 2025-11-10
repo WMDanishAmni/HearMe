@@ -10,7 +10,7 @@ import com.example.hearme.api.*;
 import java.util.Map;
 import retrofit2.*;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends BaseActivity {
 
     EditText etUsername, etPassword, etEmail, etFullName, etAddress, etPhone;
     Button btnSignup;

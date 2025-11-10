@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- file: item_emergency_stat.xml -->
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/white">>
+    app:cardBackgroundColor="?attr/colorSurface">
 
     <LinearLayout
         android:id="@+id/stat_container"
@@ -29,12 +29,13 @@
 
         <TextView
             android:id="@+id/tvCategoryName"
+            style="?android:attr/textViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Category (0)"
+            tools:text="Category (0)"
             android:textSize="14sp"
-            android:textColor="@android:color/black"
+            android:textColor="?android:attr/textColor"
             android:gravity="center" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

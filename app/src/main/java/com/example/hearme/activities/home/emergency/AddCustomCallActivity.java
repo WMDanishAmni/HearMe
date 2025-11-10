@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.adapter.CustomCallAdapter;
 import com.example.hearme.api.ApiClient;
 import com.example.hearme.api.EmergencyApiService;
@@ -32,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCustomCallActivity extends AppCompatActivity implements CustomCallAdapter.OnDeleteClickListener {
+public class AddCustomCallActivity extends BaseActivity implements CustomCallAdapter.OnDeleteClickListener {
 
     private static final String TAG = "AddCustomCallActivity";
     private static final int MAX_CONTACTS = 5;
@@ -47,7 +48,6 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
     private EmergencyApiService apiService;
 
     private CustomCallAdapter adapter;
-    // ⭐️ This list is final. We will only clear() and addAll() to it.
     private final List<CustomCallModel> contactList = new ArrayList<>();
     private boolean hasChanges = false;
 
@@ -95,17 +95,15 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
     }
 
     private void setupRecyclerView() {
-        // The adapter is given the original 'contactList' and holds onto it
         adapter = new CustomCallAdapter(contactList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
-    // ⭐️ --- FIX #1: THIS METHOD IS NOW CORRECT --- ⭐️
     private void fetchContacts() {
         String token = sessionManager.getToken();
         if (token == null) {
-            Toast.makeText(this, "Session expired", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_session_expired), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -113,23 +111,15 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
             @Override
             public void onResponse(Call<CustomCallResponseModel> call, Response<CustomCallResponseModel> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-
                     List<CustomCallModel> newList = response.body().getData();
-
-                    // 1. Clear the *original* list that the adapter is watching
                     contactList.clear();
-
-                    // 2. Add all new items from the server into the original list
                     if (newList != null) {
                         contactList.addAll(newList);
                     }
-
-                    // 3. Tell the adapter (which is still watching the original list) to refresh
                     adapter.notifyDataSetChanged();
-
                     checkContactListState();
                 } else {
-                    Toast.makeText(AddCustomCallActivity.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomCallActivity.this, getString(R.string.toast_load_contacts_failed), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -142,35 +132,29 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
     @Override
     public void onDeleteClick(CustomCallModel contact, int position) {
         new AlertDialog.Builder(this)
-                .setTitle("Delete Contact")
-                .setMessage("Are you sure you want to delete " + contact.getCustom_name() + "?")
-                .setPositiveButton("Delete", (dialog, which) -> {
+                .setTitle(getString(R.string.add_contact_delete_title))
+                .setMessage(getString(R.string.add_contact_delete_confirm, contact.getCustom_name()))
+                .setPositiveButton(getString(R.string.add_contact_delete_button), (dialog, which) -> {
                     deleteContactFromApi(contact, position);
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.dialog_phrases_cancel), null) // Re-use cancel string
                 .show();
     }
 
-    // ⭐️ --- FIX #2: THIS METHOD IS NOW CORRECT --- ⭐️
     private void deleteContactFromApi(CustomCallModel contact, int position) {
         String token = sessionManager.getToken();
         apiService.deleteCustomCall(token, contact.getCustom_id()).enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                 if (response.isSuccessful() && response.body() != null && "success".equalsIgnoreCase(response.body().getStatus())) {
-                    Toast.makeText(AddCustomCallActivity.this, "Contact deleted", Toast.LENGTH_SHORT).show();
-
-                    // 1. Modify the original list
+                    Toast.makeText(AddCustomCallActivity.this, getString(R.string.toast_contact_deleted), Toast.LENGTH_SHORT).show();
                     contactList.remove(position);
-                    // 2. Notify the adapter of the specific removal
                     adapter.notifyItemRemoved(position);
-                    // 3. Notify the adapter that item positions have changed
                     adapter.notifyItemRangeChanged(position, contactList.size());
-
                     checkContactListState();
                     hasChanges = true;
                 } else {
-                    Toast.makeText(AddCustomCallActivity.this, "Failed to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomCallActivity.this, getString(R.string.toast_delete_failed), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -180,23 +164,22 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
         });
     }
 
-    // This method is correct because it calls the fixed fetchContacts()
     private void saveContact() {
         String name = etContactName.getText().toString().trim();
         String number = etContactNumber.getText().toString().trim();
         String token = sessionManager.getToken();
 
         if (name.isEmpty() || number.isEmpty()) {
-            Toast.makeText(this, "Please enter both a name and a number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_contact_fill_both), Toast.LENGTH_SHORT).show();
             return;
         }
         if (token == null) {
-            Toast.makeText(this, "Session expired, please log in again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_session_expired), Toast.LENGTH_SHORT).show();
             return;
         }
 
         btnSaveContact.setEnabled(false);
-        Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.toast_contact_saving), Toast.LENGTH_SHORT).show();
 
         apiService.saveCustomCall(token, name, number).enqueue(new Callback<BasicResponse>() {
             @Override
@@ -213,7 +196,7 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
                         fetchContacts();
                     }
                 } else {
-                    Toast.makeText(AddCustomCallActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomCallActivity.this, getString(R.string.toast_server_error, String.valueOf(response.code())), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -227,13 +210,11 @@ public class AddCustomCallActivity extends AppCompatActivity implements CustomCa
 
     private void checkContactListState() {
         int count = contactList.size();
-
         if (count >= MAX_CONTACTS) {
             cardAddContact.setVisibility(View.GONE);
         } else {
             cardAddContact.setVisibility(View.VISIBLE);
         }
-
         if (count == 0) {
             tvNoContacts.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hearme.R;
+import com.example.hearme.activities.BaseActivity;
 import com.example.hearme.models.SessionManager;
 import com.example.hearme.api.ApiClient;
 import com.example.hearme.api.ProfileApiService;
@@ -20,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends BaseActivity {
 
     private EditText etUsername, etFullName, etEmail, etAddress;
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
@@ -62,22 +63,26 @@ public class EditProfileActivity extends AppCompatActivity {
             String confirmPass = etConfirmPassword.getText().toString().trim();
 
             if (username.isEmpty() || fullName.isEmpty() || email.isEmpty()) { // Address can be empty
-                Toast.makeText(this, "Please fill in Username, Full Name, and Email", Toast.LENGTH_SHORT).show();
+                // ⭐️ USE STRING ⭐️
+                Toast.makeText(this, getString(R.string.toast_edit_profile_fill_required), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Check if password fields are valid (if user is trying to change it)
             if (!newPass.isEmpty() || !oldPass.isEmpty() || !confirmPass.isEmpty()) {
                 if (oldPass.isEmpty()) {
-                    Toast.makeText(this, "Please enter your old password to set a new one", Toast.LENGTH_SHORT).show();
+                    // ⭐️ USE STRING ⭐️
+                    Toast.makeText(this, getString(R.string.toast_edit_profile_old_pass_required), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (newPass.isEmpty()) {
-                    Toast.makeText(this, "Please enter a new password", Toast.LENGTH_SHORT).show();
+                    // ⭐️ USE STRING ⭐️
+                    Toast.makeText(this, getString(R.string.toast_edit_profile_new_pass_required), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!newPass.equals(confirmPass)) {
-                    Toast.makeText(this, "New passwords do not match", Toast.LENGTH_SHORT).show();
+                    // ⭐️ USE STRING ⭐️
+                    Toast.makeText(this, getString(R.string.toast_edit_profile_pass_mismatch), Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -96,7 +101,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private void saveProfileChanges(String username, String fullName, String email, String address, String oldPass, String newPass, String confirmPass) {
         String token = sessionManager.getToken();
         if (token == null) {
-            Toast.makeText(this, "Session expired, please log in again", Toast.LENGTH_SHORT).show();
+            // ⭐️ USE STRING ⭐️
+            Toast.makeText(this, getString(R.string.toast_edit_profile_session_expired), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -107,28 +113,26 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UpdateProfileResponse> call, Response<UpdateProfileResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    UpdateProfileResponse res = response.body(); // Get the response
+                    UpdateProfileResponse res = response.body();
 
                     if (res.isSuccess()) {
                         // Success!
-                        Toast.makeText(EditProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        // ⭐️ USE STRING ⭐️
+                        Toast.makeText(EditProfileActivity.this, getString(R.string.toast_edit_profile_success), Toast.LENGTH_SHORT).show();
 
-                        // ⭐️ --- THIS IS THE FIX --- ⭐️
-                        // Get the UserData object from the response
+                        // This part is already correct from our previous fix
                         UserData updatedUser = res.getData();
-                        // Pass the entire object to the SessionManager
                         sessionManager.updateUserDetails(updatedUser);
-                        // ⭐️ --- END FIX --- ⭐️
 
                         // Go back to the profile page
                         finish();
 
                     } else {
-                        // API returned an error (e.g., "Username already taken")
+                        // API returned an error
                         Toast.makeText(EditProfileActivity.this, res.getError(), Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    // API returned a non-200 code (like 404 or 500)
+                    // Server error
                     Toast.makeText(EditProfileActivity.this, "Server error: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }

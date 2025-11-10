@@ -1,3 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- file: strings.xml (en) -->
 <resources>
     <string name="app_name">HearMe</string>
+
+    <!-- Guide Page -->
+    <string name="guide_emergency">Emergency</string>
+    <string name="guide_speak_hear">Speak/Hear</string>
+    <string name="guide_audio">Audio</string>
+    <string name="guide_pdf_desc">PDF Page</string>
+    <string name="guide_previous">Previous</string>
+    <string name="guide_next">Next</string>
+    <string name="guide_page_count">Page %d / %d</string>
+    <string name="toast_pdf_not_found">Cannot find PDF file</string>
+    <string name="toast_pdf_error">Error loading PDF: %s</string>
+
+    <!-- Emergency Page -->
+    <string name="header_back_desc">back</string>
+
+    <string name="emergency_send_immediately">SEND IMMEDIATELY</string>
+    <string name="emergency_personal_contact">Personal Contact</string>
+    <string name="emergency_add_contact">+ Add New Contact</string>
+    <string name="emergency_type_title">Type of Emergency</string>
+    <string name="emergency_type_accident">Accident</string>
+    <string name="emergency_type_theft">Theft</string>
+    <string name="emergency_type_health">Health</string>
+    <string name="emergency_type_fire">Fire</string>
+    <string name="emergency_type_wildlife">Wildlife</string>
+    <string name="emergency_type_injury">Injury</string>
+
+    <string name="add_contact_title">Add New Contact</string>
+    <string name="add_contact_name">Contact Name</string>
+    <string name="add_contact_name_hint">e.g., Umi, Abah</string>
+    <string name="add_contact_number">Contact Number</string>
+    <string name="add_contact_number_hint">e.g., 0123456789</string>
+    <string name="add_contact_save">Save Contact</string>
+    <string name="add_contact_existing">Existing Contacts</string>
+    <string name="add_contact_empty">You have not added any contacts.</string>
+    <string name="add_contact_delete_title">Delete Contact</string>
+    <string name="add_contact_delete_confirm">Are you sure you want to delete %s?</string>
+    <string name="add_contact_delete_button">Delete</string>
+    <string name="item_contact_delete_desc">Delete Contact</string>
+    <string name="toast_session_expired">Session expired</string>
+    <string name="toast_load_contacts_failed">Failed to load contacts</string>
+    <string name="toast_delete_failed">Failed to delete</string>
+    <string name="toast_contact_deleted">Contact deleted</string>
+    <string name="toast_contact_fill_both">Please enter both a name and a number</string>
+    <string name="toast_contact_saving">Saving...</string>
+
+    <string name="location_type_title">Select Location Type</string>
+    <string name="location_type_current">Current Location</string>
+    <string name="location_type_home">Home Address</string>
+    <string name="location_type_no_address">(No address saved)</string>
+    <string name="toast_no_home_address">No home address is saved in your profile.</string>
+    <string name="toast_no_location_found">No location found. Please try again.</string>
+
+    <string name="maps_title">Select Location</string>
+    <string name="maps_pinned_location">Pinned: -</string>
+    <string name="maps_pinned_location_value">Pinned: %.6f, %.6f</string>
+    <string name="maps_choose_button">Choose Location</string>
+    <string name="maps_marker_title">Your Location</string>
+    <string name="toast_location_not_ready">Location not available</string>
+    <string name="toast_location_not_found">Could not get location</string>
+    <string name="toast_need_location_permission">Location permission is required</string>
+    <string name="toast_location_permission_denied">Location permission denied</string>
+
+    <string name="message_preview_title">Message Preview</string>
+    <string name="message_preview_loading">Loading message...</string>
+    <string name="message_send_button">SEND</string>
+    <string name="message_template_standard">My name is %s. I am deaf. %s \n\nMy address is: %s</string>
+    <string name="message_template_custom">My name is %s. I am deaf. This message is for %s. \n\nMy address is: %s</string>
+    <string name="message_type_instant">I need immediate assistance.</string>
+    <string name="message_type_accident">I am involved in an accident. Need emergency help now.</string>
+    <string name="message_type_theft">There is a theft. Requesting police assistance.</string>
+    <string name="message_type_health">I have a medical emergency. Need an ambulance.</string>
+    <string name="message_type_fire">There is a fire. Please send the fire department.</string>
+    <string name="message_type_wildlife">There is a wildlife attack. I need help.</string>
+    <string name="message_type_injury">I am injured. Requesting medical help.</string>
+    <string name="message_type_custom">I need to contact %s.</string>
+    <string name="message_type_default">I need assistance.</string>
+    <string name="toast_record_saved">Record Saved</string>
+    <string name="toast_server_connect_fail">Failed to connect to the server.</string>
+    <string name="toast_no_sms_app">No SMS app found</string>
+    <string name="toast_sms_fail">Failed to open SMS</string>
+
+    <!-- Audio Transcription Page -->
+    <string name="audio_transcription_title">Audio Transcription</string>
+    <string name="audio_transcription_upload_button">Upload Audio File</string>
+    <string name="audio_transcription_no_file">No file selected</string>
+    <string name="audio_transcription_language_label">Select Audio Language:</string>
+    <string name="audio_transcription_transcribe_button">Transcribe</string>
+    <string name="audio_transcription_result_label">Transcription Result:</string>
+    <string name="audio_transcription_hint">Transcription will appear here...</string>
+    <string name="audio_transcription_copy_button">Copy Transcription</string>
+
+    <string name="toast_file_selected">File selected: %s</string>
+    <string name="toast_file_select_error">Error selecting file: %s</string>
+    <string name="toast_select_file_first">Please select an audio file first</string>
+    <string name="toast_transcribing">Transcribing: %s</string>
+    <string name="toast_transcription_failed">Transcription failed: %s</string>
+    <string name="toast_transcription_complete">Transcription completed!</string>
+    <string name="toast_server_error">Server error: %s</string>
+    <string name="toast_transcription_copied">Transcription copied to clipboard</string>
+    <string name="toast_no_transcription_to_copy">No transcription to copy</string>
+
+    <!-- Speak And Hear Page-->
+    <string name="speak_hear_title_hear">Hear from non-deaf</string>
+    <string name="speak_hear_title_speak">Speak to non-deaf</string>
+    <string name="speak_hear_lang_english">ENGLISH</string>
+    <string name="speak_hear_lang_malay">MALAYSIA</string>
+    <string name="speak_hear_button_reply">Reply</string>
+
+    <string name="toast_mic_permission_required">Microphone permission is required for speech recognition</string>
+    <string name="toast_language_not_supported">Language not supported. Try English.</string>
+    <string name="toast_language_malay">Malay selected</string>
+    <string name="toast_language_english">English selected</string>
+    <string name="toast_speak_enter_text">Please enter text to speak</string>
+    <string name="dialog_phrases_title">Common Phrases</string>
+    <string name="dialog_phrases_add">Add Phrases</string>
+    <string name="dialog_phrases_cancel">Cancel</string>
+    <string name="dialog_add_phrase_title">Add New Phrase</string>
+    <string name="dialog_add_phrase_hint">Enter your phrase</string>
+    <string name="dialog_add_phrase_save">Save</string>
+    <string name="toast_add_phrase_empty">Please enter a phrase</string>
+    <string name="toast_add_phrase_login_required">Please log in to add phrases</string>
+    <string name="toast_add_phrase_invalid_id">Invalid user id</string>
+    <string name="toast_add_phrase_fail">Failed to save phrase</string>
+    <string name="toast_add_phrase_fail_network">Failed to save phrase (network)</string>
+    <string name="toast_tts_init_failed">Text-to-speech initialization failed</string>
+    <string name="toast_tts_not_ready">Text-to-speech not ready</string>
+    <string name="toast_speech_recognition_not_available">Speech recognition not available</string>
+
+    <!-- Edit Profile Page -->
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_profile_username">Username</string>
+    <string name="edit_profile_username_hint">Enter your username</string>
+    <string name="edit_profile_full_name">Full Name</string>
+    <string name="edit_profile_full_name_hint">Enter your full name</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="edit_profile_email_hint">Enter your email</string>
+    <string name="edit_profile_address">Address</string>
+    <string name="edit_profile_address_hint">Enter your home address</string>
+    <string name="edit_profile_old_password">Old Password</string>
+    <string name="edit_profile_old_password_hint">Enter your current password</string>
+    <string name="edit_profile_new_password">New Password</string>
+    <string name="edit_profile_new_password_hint">Enter a new password</string>
+    <string name="edit_profile_confirm_password">Confirm New Password</string>
+    <string name="edit_profile_confirm_password_hint">Confirm your new password</string>
+    <string name="edit_profile_save_button">Save Changes</string>
+
+    <string name="toast_edit_profile_fill_required">Please fill in Username, Full Name, and Email</string>
+    <string name="toast_edit_profile_old_pass_required">Please enter your old password to set a new one</string>
+    <string name="toast_edit_profile_new_pass_required">Please enter a new password</string>
+    <string name="toast_edit_profile_pass_mismatch">New passwords do not match</string>
+    <string name="toast_edit_profile_session_expired">Session expired, please log in again</string>
+    <string name="toast_edit_profile_success">Profile updated successfully!</string>
+
+    <!-- Admin User Detail Page -->
+    <string name="admin_user_details_title">User Details</string>
+    <string name="admin_user_search_hint">Search by username or email</string>
+    <string name="admin_user_search_button">Search</string>
+    <string name="admin_user_list_empty">No users found.</string>
+    <string name="admin_user_list_email">Email: %s</string>
+    <string name="admin_user_list_phone">Phone: %s</string>
+    <string name="admin_user_dialog_title">User Information</string>
+    <string name="admin_user_dialog_info">👤 Username: %s\n📧 Email: %s\n🪪 Full Name: %s\n🏠 Address: %s\n📞 Phone: %s\n📅 Created At: %s</string>
+
+    <!-- Admin Dashboard Page -->
+    <string name="admin_dashboard_title">Admin Dashboard</string>
+    <string name="admin_total_users">Total Users: %d</string>
+    <string name="admin_view_user_details">View User Details</string>
+    <string name="admin_chart_title">Bar Chart for Frequently Used Emergencies</string>
+    <string name="admin_chart_description">Emergency Usage Frequency</string>
+    <string name="admin_chart_no_data">No emergency data available</string>
+    <string name="admin_grid_title">Emergency Usage by Category:</string>
+    <string name="admin_bottom_sheet_title">Users for %s</string>
+    <string name="admin_bottom_sheet_no_users">No users found for this category.</string>
+
+    <!-- Chat History Page -->
+    <string name="history_title">Chat History</string>
+    <string name="history_delete_all">DELETE ALL</string>
+    <string name="history_toggle_messages">MESSAGES</string>
+    <string name="history_toggle_emergency">EMERGENCY</string>
+    <string name="history_empty_chat_title">No chat history yet</string>
+    <string name="history_empty_chat_message">Your conversations will appear here\nonce you start using the app</string>
+    <string name="history_empty_emergency_title">No emergency history yet</string>
+    <string name="history_empty_emergency_message">Your sent emergency alerts will appear here</string>
+
+    <!-- Chat Detail Page -->
+    <string name="chat_detail_title">Chat Details</string>
+    <string name="chat_detail_hear_label">Hear from non-deaf</string>
+    <string name="chat_detail_speak_label">Speak to non-deaf</string>
+    <string name="chat_detail_delete_button">DELETE</string>
+    <string name="chat_detail_delete_confirm_title">Delete Conversation</string>
+    <string name="chat_detail_delete_confirm_message">Are you sure you want to delete this conversation?</string>
+    <string name="chat_detail_delete_yes">Yes</string>
+    <string name="chat_detail_delete_cancel">Cancel</string>
+    <string name="chat_detail_loading">Loading...</string>
+
+    <!-- Home Page -->
+    <string name="home_speak_to_non_deaf">Speak to non-deaf</string>
+    <string name="home_hear_from_non_deaf">Hear from non-deaf</string>
+    <string name="home_audio_transcription">Audio File Transcription</string>
+    <string name="home_emergency_sms">EMERGENCY SMS</string>
+
+    <!-- Profile Page -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_text_size">Text Size</string>
+    <string name="profile_theme_mode">Dark Mode</string>
+    <string name="profile_language">Language</string>
+    <string name="profile_edit_profile">Edit Profile</string>
+    <string name="profile_log_out">Log Out</string>
+
+    <string name="dialog_select_language">Select Language</string>
+    <string name="dialog_select_text_size">Select Text Size</string>
+    <string name="text_size_small">Small</string>
+    <string name="text_size_medium">Medium</string>
+    <string name="text_size_large">Large</string>
+
+    <!-- Nav Bar -->
+    <string name="nav_home">HOME</string>
+    <string name="nav_history">HISTORY</string>
+    <string name="nav_guide">GUIDE</string>
+    <string name="nav_admin">ADMIN</string>
+    <string name="nav_profile">PROFILE</string>
 </resources>

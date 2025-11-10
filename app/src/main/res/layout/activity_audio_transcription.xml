@@ -6,14 +6,14 @@
     android:id="@+id/audio_transcription_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="?android:attr/windowBackground"
     tools:context=".activities.home.audio.AudioTranscriptionActivity">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="10dp"
@@ -32,7 +32,7 @@
             android:focusable="true"
             android:src="@drawable/ic_back_arrow"
             android:onClick="back"
-            app:tint="#333333" />
+            app:tint="?attr/colorOnPrimary" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:src="@drawable/logo"
             android:paddingStart="-50dp"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/app_name" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,29 +60,32 @@
 
         <Button
             android:id="@+id/uploadButton"
+            style="?android:attr/buttonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/roundstyle"
-            android:text="Upload Audio File"
-            android:textColor="#000000"
-            android:textSize="16sp"
+            android:text="@string/audio_transcription_upload_button"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/fileNameTextView"
+            style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="No file selected"
-            android:textColor="#757575"
+            android:text="@string/audio_transcription_no_file"
+            android:textColor="?android:attr/textColorHint"
             android:textSize="17sp" />
         <TextView
             android:id="@+id/languageLabel"
+            style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Select Audio Language:"
-            android:textColor="#333333"
+            android:text="@string/audio_transcription_language_label"
+            android:textColor="?android:attr/textColor"
             android:textSize="16sp" />
         <Spinner
             android:id="@+id/languageSpinner"
@@ -91,18 +94,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/roundstyle"
-            android:backgroundTint="@color/yellow"
+            android:backgroundTint="?attr/colorPrimary"
             android:padding="12dp" />
         <Button
             android:id="@+id/transcribeButton"
+            style="?android:attr/buttonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:background="@drawable/roundstyle"
             android:enabled="false"
-            android:text="Transcribe"
-            android:textColor="#333333"
-            android:textSize="16sp"
+            android:text="@string/audio_transcription_transcribe_button"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             android:textStyle="bold" />
         <ProgressBar
             android:id="@+id/progressBar"
@@ -112,37 +116,40 @@
             android:visibility="gone" />
         <TextView
             android:id="@+id/resultLabel"
+            style="?android:attr/textViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Transcription Result:"
+            android:text="@string/audio_transcription_result_label"
             android:textSize="18sp"
             android:textStyle="bold" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#F5F5F5"
+            android:background="?attr/toolbarColor"
             android:padding="12dp"
             android:scrollbars="vertical">
             <TextView
                 android:id="@+id/transcriptionTextView"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Transcription will appear here..."
-                android:textColor="#333333"
+                android:text="@string/audio_transcription_hint"
+                android:textColor="?android:attr/textColor"
                 android:textSize="16sp" />
         </ScrollView>
         <Button
             android:id="@+id/copyButton"
+            style="?android:attr/buttonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/roundstyle"
-            android:text="Copy Transcription"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:text="@string/audio_transcription_copy_button"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             android:textStyle="bold"
             android:visibility="gone" />
     </LinearLayout>
@@ -151,7 +158,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -172,15 +179,15 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_home"
-            app:tint="#333333" />
+            app:tint="?attr/colorOnPrimary" />
 
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="HOME"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_home"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -199,15 +206,15 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_recent_history"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
 
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="HISTORY"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_history"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -227,16 +234,16 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_help"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
 
             <TextView
                 android:id="@+id/nav_guide_admin_text"
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="GUIDE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_guide"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -255,15 +262,15 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_profile"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
 
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="PROFILE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_profile"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

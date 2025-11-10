@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VerifyOtpActivity extends AppCompatActivity {
+public class VerifyOtpActivity extends BaseActivity {
 
     private EditText etEmail, etOtp;
     private Button btnVerifyOtp, btnResendOtp;

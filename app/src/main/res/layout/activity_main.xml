@@ -6,14 +6,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="?android:attr/windowBackground"
     tools:context=".activities.MainActivity">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,13 +70,13 @@
                         android:layout_height="64dp"
                         android:layout_marginBottom="12dp"
                         android:src="@drawable/ic_keyboard"
-                        app:tint="#555555" />
+                        app:tint="?android:attr/textColorSecondary" />
                     <TextView
+                        style="?android:attr/textViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Speak to non-deaf"
-                        android:textColor="#333333"
-                        android:textSize="16sp"
+                        android:text="@string/home_speak_to_non_deaf"
+                        android:textColor="?android:attr/textColor"
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                 </LinearLayout>
@@ -103,13 +103,13 @@
                         android:layout_height="48dp"
                         android:layout_marginBottom="12dp"
                         android:src="@android:drawable/ic_btn_speak_now"
-                        app:tint="#555555" />
+                        app:tint="?android:attr/textColorSecondary" />
                     <TextView
+                        style="?android:attr/textViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hear from non-deaf"
-                        android:textColor="#333333"
-                        android:textSize="16sp"
+                        android:text="@string/home_hear_from_non_deaf"
+                        android:textColor="?android:attr/textColor"
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                 </LinearLayout>
@@ -144,13 +144,13 @@
                         android:layout_height="48dp"
                         android:layout_marginBottom="12dp"
                         android:src="@drawable/volume_file"
-                        app:tint="#555555" />
+                        app:tint="?android:attr/textColorSecondary" />
                     <TextView
+                        style="?android:attr/textViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Audio Transcription"
-                        android:textColor="#333333"
-                        android:textSize="16sp"
+                        android:text="@string/home_audio_transcription"
+                        android:textColor="?android:attr/textColor"
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                 </LinearLayout>
@@ -166,7 +166,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:cardBackgroundColor="#F44336">
+                app:cardBackgroundColor="@color/emergency_red">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -178,13 +178,13 @@
                         android:layout_height="60dp"
                         android:layout_marginBottom="12dp"
                         android:src="@drawable/ic_sms"
-                        app:tint="#FFFFFF" />
+                        app:tint="@color/white" />
                     <TextView
+                        style="?android:attr/textViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EMERGENCY SMS"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
+                        android:text="@string/home_emergency_sms"
+                        android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                 </LinearLayout>
@@ -196,7 +196,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -218,14 +218,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_home"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="HOME"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_home"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -243,14 +243,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_recent_history"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="HISTORY"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_history"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -270,15 +270,15 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_help"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
                 android:id="@+id/nav_guide_admin_text"
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="GUIDE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_guide"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -291,19 +291,20 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#55FFC107">
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_profile"
-                app:tint="#333333" />
+                app:tint="?attr/colorOnPrimary" />
             <TextView
+                style="?attr/navBarTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="PROFILE"
-                android:textColor="#333333"
-                android:textSize="10sp"
+                android:text="@string/nav_profile"
+                android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

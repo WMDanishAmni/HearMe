@@ -66,7 +66,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
 
-    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.appcompat)
@@ -79,5 +78,3 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 }
-
-

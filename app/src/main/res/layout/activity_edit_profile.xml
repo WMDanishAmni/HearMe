@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="?android:attr/windowBackground"
     tools:context=".activities.profile.EditProfileActivity">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#FFC107"
+        android:background="?attr/colorPrimary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="10dp"
@@ -30,14 +30,15 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_back_arrow"
-            app:tint="#333333" />
+            app:tint="?attr/colorOnPrimary" />
 
         <TextView
+            style="?android:attr/textViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Edit Profile"
-            android:textColor="#333333"
+            android:text="@string/edit_profile_title"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -55,110 +56,132 @@
             android:padding="20dp">
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_username"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_edit_username"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter your username"
-                android:textColor="#000000"/>
+                android:hint="@string/edit_profile_username_hint"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"/>
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full Name"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_full_name"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_edit_fullname"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter your full name"
-                android:textColor="#000000" />
+                android:hint="@string/edit_profile_full_name_hint"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"/>
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_email"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_edit_email"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter your email"
+                android:hint="@string/edit_profile_email_hint"
                 android:inputType="textEmailAddress"
-                android:textColor="#000000" />
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"/>
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_address"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_edit_address"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:gravity="top"
-                android:hint="Enter your home address"
-                android:textColor="#000000"
+                android:hint="@string/edit_profile_address_hint"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"
                 android:inputType="textMultiLine"
                 android:minLines="3" />
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Old Password"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_old_password"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_old_password"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter your current password"
-                android:textColor="#000000"
+                android:hint="@string/edit_profile_old_password_hint"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"
                 android:inputType="textPassword" />
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Password"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_new_password"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_new_password"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter a new password"
-                android:textColor="#000000"
+                android:hint="@string/edit_profile_new_password_hint"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"
                 android:inputType="textPassword" />
 
             <TextView
+                style="?android:attr/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirm New Password"
-                android:textColor="#555555" />
+                android:text="@string/edit_profile_confirm_password"
+                android:textColor="?android:attr/textColorSecondary" />
             <EditText
                 android:id="@+id/et_confirm_password"
+                style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Confirm your new password"
-                android:textColor="#000000"
+                android:hint="@string/edit_profile_confirm_password_hint"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="?android:attr/textColorHint"
                 android:inputType="textPassword" />
             <Button
                 android:id="@+id/btn_save_profile"
+                style="?android:attr/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#FFC107"
-                android:textColor="#000000"
-                android:text="Save Changes" />
+                android:backgroundTint="?attr/colorPrimary"
+                android:textColor="?attr/colorOnPrimary"
+                android:text="@string/edit_profile_save_button" />
 
         </LinearLayout>
     </ScrollView>
